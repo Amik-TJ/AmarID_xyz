@@ -13,11 +13,10 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="form-inline ml-auto">
-            <p class="my-auto" >
-
+            <p class="my-auto">
             <div class="btn-group" role="group">
-
                 @auth
+                    <a class="btn btn-secondary rounded-pill mr-2" href="{{\App\Helpers\Helper::dashboard_selector()}}">Dashboard</a>
                     <a class="btn btn-secondary rounded-pill" href="{{ route('logout') }}"
                        onclick="event.preventDefault();
                                                  document.getElementById('logout-form').submit();">
@@ -32,8 +31,6 @@
                     <a class="btn btn-secondary rounded-pill " href="{{ route('register') }}">Register</a>
                 @endauth
             </div>
-
-
             </p>
         </div>
     </div>

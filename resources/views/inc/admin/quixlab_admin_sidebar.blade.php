@@ -25,7 +25,7 @@
             </li>
             <li>
                 <a href="/see_more_message">
-                    <i class="icon-basic-message menu-icon"></i><span class="nav-text font-weight-bold">Messages</span>
+                    <i class="icon-envelope-letter menu-icon"></i><span class="nav-text font-weight-bold">Inbox</span>
                 </a>
             </li>
             <li>
@@ -64,9 +64,10 @@
             @if($admin)
             <li>
                 <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                    <i class="icon-screen-tablet menu-icon"></i><span class="nav-text font-weight-bold">Users</span>
+                    <i class="icon-screen-tablet menu-icon"></i><span class="nav-text font-weight-bold">Manage Users</span>
                 </a>
                 <ul aria-expanded="false">
+                    <li><a href="/admin_vendor_registration">Register Vendor</a></li>
                     <li><a href="/admin_user_registration">Register User</a></li>
                     <li><a href="/view_unverified_user">Verify User</a></li>
                 </ul>

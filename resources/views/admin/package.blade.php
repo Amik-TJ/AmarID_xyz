@@ -83,7 +83,7 @@
                             <form action="/delete_package" method="Post">
                                 @csrf
                                 <input type="hidden" name="package_id" value="{{$package->packageID}}">
-                                <button class="btn btn-danger float-right btn-sm">Delete</button>
+                                <button class="btn btn-danger float-right btn-sm">Archive</button>
                             </form>
                         </div>
                     </div>

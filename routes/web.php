@@ -51,8 +51,10 @@ Route::get('/on_print', '\App\Http\Controllers\OnPrintController@index')->name('
 
 
 // Admin Push User Registration
-Route::get('/admin_user_registration', '\App\Http\Controllers\AdminPanelUserRegisterController@index')->middleware('admin'); // Registration Form
-Route::post('/push_user_registration', '\App\Http\Controllers\AdminPanelUserRegisterController@register_user')->middleware('admin'); // Registration Form Submit
+Route::get('/admin_user_registration', '\App\Http\Controllers\AdminPanelUserRegisterController@index')->middleware('admin'); // Registration Form for Normal Users
+Route::get('/admin_vendor_registration', '\App\Http\Controllers\AdminPanelUserRegisterController@vendor_registration')->middleware('admin'); // Registration Form for Vendor
+Route::post('/push_user_registration', '\App\Http\Controllers\AdminPanelUserRegisterController@register_user')->middleware('admin'); // Registration Form Submit for User
+Route::post('/push_vendor_registration', '\App\Http\Controllers\AdminPanelUserRegisterController@register_vendor')->middleware('admin'); // Registration Form Submit for Vendor
 Route::get('/view_unverified_user', '\App\Http\Controllers\AdminPanelUserRegisterController@view_unverified_user')->middleware('admin'); // View Unverified User
 Route::post('/verify_user_registration', '\App\Http\Controllers\AdminPanelUserRegisterController@verify_user_registration')->middleware('admin'); // Verify User Button
 

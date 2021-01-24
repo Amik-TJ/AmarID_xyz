@@ -19,7 +19,7 @@ class MessageController extends Controller
     {
 
 
-        $message = Helper::get_user_messages(auth()->user()->userID);
+        /*$message = Message::where('')*/
         return view('common_views.show_full_conversation')->with('data',$message);
 
 

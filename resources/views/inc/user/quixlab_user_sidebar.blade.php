@@ -22,7 +22,7 @@
             </li>
             <li>
                 <a href="/see_more_message">
-                    <i class="icon-basic-spread-text menu-icon"></i><span class="nav-text font-weight-bold">Messages</span>
+                    <i class="icon-envelope-letter menu-icon"></i><span class="nav-text font-weight-bold">Inbox</span>
                 </a>
             </li>
             <li>

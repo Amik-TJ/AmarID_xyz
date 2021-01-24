@@ -180,20 +180,23 @@
                     <div class="drop-down dropdown-profile animated fadeIn dropdown-menu">
                         <div class="dropdown-content-body">
                             <ul>
+                                {{--<li>
+                                    <a href=""><i class="icon-user"></i> <span>Profile</span></a>
+                                </li>--}}
                                 <li>
-                                    <a href="app-profile.html"><i class="icon-user"></i> <span>Profile</span></a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void()">
-                                        <i class="icon-envelope-open"></i> <span>Inbox</span> <div class="badge gradient-3 badge-pill gradient-1">3</div>
+                                    <a href="/see_more_message">
+                                        <i class="icon-envelope-open"></i> <span>Inbox</span> <div class="badge gradient-3 badge-pill @if($message['seen_count']) gradient-1 @endif">{{$message['seen_count']}}</div>
                                     </a>
                                 </li>
 
                                 <hr class="my-2">
                                 <li>
-                                    <a href="page-lock.html"><i class="icon-lock"></i> <span>Lock Screen</span></a>
+                                    <a href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
+                                                 document.getElementById('logout-form').submit();">
+                                        <i class="icon-key"></i> <span>Logout</span>
+                                    </a>
                                 </li>
-                                <li><a href="page-login.html"><i class="icon-key"></i> <span>Logout</span></a></li>
                             </ul>
                         </div>
                     </div>

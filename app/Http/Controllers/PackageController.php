@@ -28,7 +28,7 @@ class PackageController extends Controller
      */
     public function index()
     {
-        $packages = DB::table('packages')->get();
+        $packages = DB::table('packages')->where('archived',0)->get();
         return view('admin.package')->with('packages',$packages);
     }
 
@@ -36,11 +36,13 @@ class PackageController extends Controller
     public function delete_package(Request $request)
     {
         $package_id = $request->input('package_id');
-        $package_exists =  DB::table('orders')->where('packageID', $package_id)->exists();
+        /*$package_exists =  DB::table('orders')->where('packageID', $package_id)->exists();
         if($package_exists)
-            return redirect('/package')->with('error','This Package has already orders');
-        DB::table('packages')->where('packageID',$request->input('package_id'))->delete();
-        return redirect('/package')->with('success','Package Deleted Successfully');
+            return redirect('/package')->with('error','This Package has already orders');*/
+        $package = Packages::find($package_id);
+        $package->archived = 1;
+        $package->save();
+        return redirect('/package')->with('success','Package no: '.$package_id.' Archived Successfully');
     }
 
 

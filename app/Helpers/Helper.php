@@ -1,6 +1,7 @@
 <?php
 namespace App\Helpers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use PhpParser\Node\Stmt\Return_;
 
@@ -116,5 +117,28 @@ class Helper
         );
 
         return $notification_data;
+    }
+
+
+    public static function dashboard_selector()
+    {
+        if (!Auth::check()) {
+            return '/login';
+        }
+
+        if (auth()->user()->admin == 1) {
+
+
+            return '/admin_dash_board';
+        }
+
+        if (auth()->user()->admin == 0  && auth()->user()->print_vendor == 1) {
+            return '/on_print';
+        }
+
+        if (auth()->user()->admin == 0  && auth()->user()->delivery_vendor == 1) {
+            return  '/shipped_order';
+        }
+        return  '/user_dashboard';
     }
 }

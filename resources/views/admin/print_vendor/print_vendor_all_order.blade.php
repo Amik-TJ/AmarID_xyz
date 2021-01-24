@@ -13,7 +13,7 @@
                         <!-- title -->
                         <div class="d-md-flex align-items-center">
                             <div>
-                                <h1 class="card-title text-primary">Your ALl Orders</h1>
+                                <h1 class="card-title text-primary">Your ALL Orders</h1>
                                 @if($data['found'])
                                     <h5 class="card-subtitle text-success">Overview of All Oders</h5>
                                 @else

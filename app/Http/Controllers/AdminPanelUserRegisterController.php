@@ -140,4 +140,75 @@ class AdminPanelUserRegisterController extends Controller
         else
             return redirect('/view_unverified_user')->with('error','Temporary User ID : '.$unverified_user_id.' cannot be verified successfully');
     }
+
+
+
+    public function vendor_registration()
+    {
+        return view('admin.admin_vendor_registration');
+    }
+
+
+    public function register_vendor(Request $request)
+    {
+        $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email|unique:verify_user,email',
+            'password' => 'required|string|min:4|confirmed',
+            'phone' => 'required|numeric|min:11|unique:users|unique:verify_user,phone',
+            'vendor_type' => 'required|string|max:255',
+            'location' => 'required|string|max:255'
+        ]);
+
+        $vendor_type = $request->input('vendor_type');
+        if($vendor_type == 1)
+        {
+            $print_vendor = 1;
+            $delivery_vendor = 0;
+            $string = 'Print Vendor';
+        }elseif ($vendor_type == 2)
+        {
+            $print_vendor = 0;
+            $delivery_vendor = 1;
+            $string = 'Delivery Vendor';
+        }
+
+        $first_name = $request->input('first_name');
+        $last_name = $request->input('last_name');
+        $email = $request->input('email');
+        $password = $request->input('password');
+        $phone = $request->input('phone');
+        $location = $request->input('location');
+        $sub_field_id = $request->input('sub_field');
+
+
+        $admin = 0;
+        $field_id = DB::table('sub_field')->where('subFieldID', $sub_field_id)->value('fieldID');
+        $account_type_id = DB::table('field')->where('fieldID', $field_id)->value('accTypeID');
+
+
+
+
+        $user = new User();
+        $user->firstname = $first_name;
+        $user->lastname = $last_name;
+        $user->email = $email;
+        $user->phone = $phone;
+        $user->password = $password;
+        $user->photo_url = null;
+        $user->accTypeID = $account_type_id;
+        $user->subFieldID = $sub_field_id;
+        $user->fieldID = $field_id;
+        $user->location = $location;
+        $user->admin = $admin;
+        $user->print_vendor = $print_vendor;
+        $user->delivery_vendor = $delivery_vendor;
+        $user->active = 1;
+        $user->save();
+        $new_user_id = $user->userID;
+
+        return redirect('/admin_vendor_registration')->with('success','Name : '.$first_name.' '.$last_name.' registered as new '.$string.' || User ID : '.$new_user_id);
+
+    }
 }
