@@ -155,12 +155,12 @@
 
                     {{-------------------------- One Sided Copy ---------------------}}
                     <div class="form-group row">
-                        <label for="oneSidedCard" class="col-md-4 col-form-label text-md-right">{{ __('Card Side(One or Both)') }}</label>
+                        <label for="oneSidedCard" class="col-md-4 col-form-label text-md-right">{{ __('Card Side(Both)') }}</label>
                         <div class="col-md-6">
                             <select class="form-control" id="oneSidedCard" name="oneSidedCard">
                                 <option >----</option>
-                                <option value="1">Yes</option>
-                                <option value="0">No</option>
+                                <option value="0">Yes</option>
+                                <option value="1">No</option>
                             </select>
                         </div>
                     </div>

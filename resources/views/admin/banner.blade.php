@@ -19,11 +19,23 @@
             <div class="row">
                 @foreach($data['data'] as $banner)
 
-                <div class="col-md-6 col-lg-3">
+                <div class="col-md-6 col-lg-3 mb-4">
                     <div class="card h-100">
                         <img class="img-fluid" src="{{url('storage/'.$banner->imgURL)}}"  alt="">
                         <div class="card-body">
-                            <h5 class="card-title">Banner No : {{$banner->bannerID}}</h5>
+                            <h5 class="card-title">Banner No : <span class="text-danger">{{$banner->bannerID}}</span></h5>
+                            <h5 class="card-title">Title : <span class="text-danger">{{$banner->banner_title}}</span></h5>
+                            <h5 class="card-title">Type :
+                                <span class="text-danger">
+                                    @if($banner->banner_row == 1 )
+                                        For Home
+                                    @elseif($banner->banner_row == 2)
+                                        For Office
+                                    @else
+                                        Not selected
+                                    @endif
+                                </span>
+                            </h5>
                         </div>
                         <div class="card-footer">
                             <form action="/delete_banner" method="Post">
@@ -60,10 +72,28 @@
                     @csrf
 
                     {{-------------------------- Form Fields ---------------------}}
+                    {{-------------------------- Title ---------------------}}
+                    <div class="form-group row">
+                        <label for="banner_title" class="col-md-4 col-form-label text-md-right">{{ __('Banner Title') }}</label>
 
+                        <div class="col-md-6">
+                            <input id="banner_title" type="text" class="form-control" name="banner_title" value="{{ old('banner_title') }}"  autocomplete="banner_title" autofocus required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="banner_row" class="col-md-4 col-form-label text-md-right">{{ __('Banner Type') }}</label>
+                        <div class="col-md-6">
+                            <select class="form-control" id="banner_row" name="banner_row">
+                                <option >----</option>
+                                <option value="1">Services For Home</option>
+                                <option value="2">Services For Office</option>
+                            </select>
+                        </div>
+                    </div>
                     {{-------------------------- Banner Image ---------------------}}
                     <div class="form-group row">
-                        <label for="banner_image" class="col-md-4 col-form-label text-md-right">{{ __('Banner Image') }}</label>
+                        <label for="banner_image" class="col-md-4 col-form-label text-md-right mr-3">{{ __('Banner Image') }}</label>
                         <div class="col-md-6 custom-file">
                             <input type="file" class="custom-file-input" id="banner_image" name="banner_image">
                             <label class="custom-file-label" for="banner_image"></label>

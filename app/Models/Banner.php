@@ -14,6 +14,6 @@ class Banner extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'bannerID','imgURL',
+        'bannerID','banner_title','imgURL',
     ];
 }

@@ -27,7 +27,8 @@ class SubFieldController extends Controller
         if($sub_fields->isEmpty())
         {
             $data = array(
-                'found'=>false
+                'found'=>false,
+                'field' => $fields
             );
             return view('admin.sub_field')->with('data',$data);
         }

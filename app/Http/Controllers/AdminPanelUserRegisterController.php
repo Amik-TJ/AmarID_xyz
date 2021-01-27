@@ -211,4 +211,26 @@ class AdminPanelUserRegisterController extends Controller
         return redirect('/admin_vendor_registration')->with('success','Name : '.$first_name.' '.$last_name.' registered as new '.$string.' || User ID : '.$new_user_id);
 
     }
+
+
+
+    // Register Using CSV
+    public function register_user_csv(Request $request)
+    {
+
+        $request->validate([
+            'csv_file' => 'required|mimes:csv,txt'
+        ]);
+
+        $file = file($request->csv_file->getRealPath());
+
+        //$data = array_slice($file,1);
+
+        $data = array_map('str_getcsv',$file($request->input('csv_file')));
+
+        foreach ($data as $row)
+        {
+            dd($row);
+        }
+    }
 }

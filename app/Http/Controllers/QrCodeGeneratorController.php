@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class QrCodeGeneratorController extends Controller
@@ -10,6 +12,24 @@ class QrCodeGeneratorController extends Controller
     public function index(Request $request)
     {
 
+
+        $qr_string = $this->qr_code_string_generator($request);
+        $path = $this->generate_qr_path();
+
+
+
+        QrCode::size(200)->generate($qr_string, storage_path().'/app/public/'.$path);
+        $card = [
+            'token' => true,
+            'card_string' => $qr_string,
+            'qr_path' => $path,
+        ];
+        return view('welcome')->with('card',$card);
+    }
+
+
+    public function qr_code_string_generator(Request $request)
+    {
         // here our data
         $first_name = $request->input('first_name');
         $last_name = $request->input('last_name');
@@ -45,10 +65,37 @@ class QrCodeGeneratorController extends Controller
         $codeContents .= 'Email Personal:'.$email_personal." Email Business: ".$email_business."\n";
 
         $codeContents .= 'END:VCARD';
-        $card = [
-            'token' => true,
-            'card_string' => $codeContents
-        ];
-        return view('welcome')->with('card',$card);
+
+        return $codeContents;
+    }
+
+
+    public function generate_qr_path()
+    {
+        // Creating Storing Location if not exists
+        if (!file_exists(storage_path().'/app/public/qrcodes/')) {
+            mkdir(storage_path().'/app/public/qrcodes/', 666, true);
+        }
+
+        $files = File::files(storage_path().'/app/public/qrcodes/');
+
+
+        $file_count = 0;
+        if ($files !== false) {
+            $file_count = count($files);
+        }
+
+
+        if($file_count>100)
+        {
+            File::cleanDirectory(storage_path().'/app/public/qrcodes/');
+            $file_no = 1;
+        }else{
+            $file_no = $file_count + 1;
+        }
+
+        $path = 'qrcodes/qrcode_'.$file_no.'.svg';
+        return $path;
+
     }
 }

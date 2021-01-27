@@ -4,10 +4,56 @@
     $sub_field_types = DB::table('sub_field')->select('subFieldName','subFieldID')->get();
     ?>
     <div class="jumbotron">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row mb-5">
+                                    <div class="col">
+                                        <div class="card card-profile text-center">
+                                            <span class="mb-1 text-primary"><i class="icon-people"></i></span>
+                                            <p class="text-dark px-4 font-weight-bold">
+                                                Register using CSV
+                                            </p>
+                                        </div>
+                                        <div class="div">
+                                            <form method="POST" action="/register_user_csv" enctype="multipart/form-data">
+                                                @csrf
+                                                <div class="form-group row">
+                                                    <label for="csv_file" class="col-md-4 col-form-label text-md-right mr-3">{{ __('Upload CSV') }}</label>
+                                                    <div class="col-md-6 custom-file">
+                                                        <input type="file" class="custom-file-input" id="csv_file" name="csv_file">
+                                                        <label class="custom-file-label" for="csv_file"></label>
+                                                        @error('csv_file')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                             </span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row mb-0">
+                                                    <div class="col-md-5 offset-md-5">
+                                                        <button type="submit" class="btn btn-success">
+                                                            {{ __('Upload') }}
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header text-center text-danger font-weight-bold">{{ __('Admin Panel User Registration') }}</div>
+                    <div class="card-header text-center text-danger font-weight-bold mt-4">{{ __('Admin Panel User Registration') }}</div>
 
                     <div class="card-body">
                         <form method="POST" action="/push_user_registration">
@@ -152,4 +198,19 @@
             </div>
         </div>
     </div>
+@endsection
+
+
+@section('filename_bootstrap_js')
+    <script type="text/javascript">
+
+        $('.custom-file input').change(function (e) {
+            var files = [];
+            for (var i = 0; i < $(this)[0].files.length; i++) {
+                files.push($(this)[0].files[i].name);
+            }
+            $(this).next('.custom-file-label').html(files.join(', '));
+        });
+
+    </script>
 @endsection

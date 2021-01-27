@@ -64,17 +64,17 @@
                                             Normal
                                         @endif
                                     </td>
-                                    @if($all->orderUrl == null)
+                                   {{--@if($all->orderUrl == null)
                                         <td>No Images</td>
                                         <td>No Images</td>
-                                    @else
+                                    @else--}}
                                         <td>
                                             <img src="{{url('storage/'.$all->orderUrl.'/resize_front.jpg')}}" alt="No Images" style="height: 40px;width: 60px;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);">
                                         </td>
                                         <td>
                                             <img src="{{url('storage/'.$all->orderUrl.'/resize_back.jpg')}}" alt="No Images" style="height: 40px;width: 60px;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);">
                                         </td>
-                                    @endif
+                                    {{--@endif--}}
                                 </tr>
                                 @endforeach
                                 </tbody>

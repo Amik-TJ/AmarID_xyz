@@ -57,6 +57,7 @@ Route::post('/push_user_registration', '\App\Http\Controllers\AdminPanelUserRegi
 Route::post('/push_vendor_registration', '\App\Http\Controllers\AdminPanelUserRegisterController@register_vendor')->middleware('admin'); // Registration Form Submit for Vendor
 Route::get('/view_unverified_user', '\App\Http\Controllers\AdminPanelUserRegisterController@view_unverified_user')->middleware('admin'); // View Unverified User
 Route::post('/verify_user_registration', '\App\Http\Controllers\AdminPanelUserRegisterController@verify_user_registration')->middleware('admin'); // Verify User Button
+Route::post('/register_user_csv', '\App\Http\Controllers\AdminPanelUserRegisterController@register_user_csv')->middleware('admin'); // Verify User Button
 
 
 

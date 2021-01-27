@@ -7,16 +7,58 @@ use App\Models\DeliveryAddress;
 use App\Models\Orders;
 use App\Models\Predesigned;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use League\Flysystem\File;
+use mysqli;
 
 class RemoteRequestController extends Controller
 {
 
     public function upload_design(Request $request)
     {
-        $front = $request->input('front');
+
+        // ----------------   Previous API Starts ----------------------------- //
+
+        $front = base64_decode($_POST['front']);
+        $back = base64_decode($_POST['back']);
+        $json = $_POST['json'];
+        $name = $_POST['name'];
+
+        $servername = Config::get('database.connections.mysql.host');
+        $username = Config::get('database.connections.mysql.username');
+        $password = 'aLNFA0t7m4IW';
+        $dbname = Config::get('database.connections.mysql.database');
+
+        $upload_dir = 'uploads/designs/'.$name;
+        if (!is_dir($upload_dir)) {
+            mkdir($upload_dir, 0777, true);
+        }
+        file_put_contents($upload_dir.'/front.jpg', $front);
+        file_put_contents($upload_dir.'/back.jpg', $back);
+
+        // Create connection
+        $conn = new mysqli($servername, $username, $password, $dbname);
+        $json = $conn->real_escape_string($json);
+        // Check connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+        //echo "Connected successfully";
+        $fu = $upload_dir . "/front.jpg";
+        $bu = $upload_dir . "/back.jpg";
+
+        $sql = "INSERT INTO predesigned (json, frontUrl, backUrl) VALUES('" . $json . "','" . $fu . "','" . $bu ."')";
+        //echo $sql;
+        $conn->query($sql);
+
+
+
+
+        // ----------------- Laravel Part Starts --------------------- //
+        /*$front = $request->input('front');
         $back = $request->input('back');
         $json = $request->input('json');
         $name = $request->input('name');
@@ -53,17 +95,75 @@ class RemoteRequestController extends Controller
             return "Uploaded Successfully. ";
         }
         else
-            return "Image cannot be uploaded";
+            return "Image cannot be uploaded";*/
 
     }
 
 
     public function upload_image(Request $request)
     {
+        // Connection Credentials
+        /*if(DB::connection()->getDatabaseName())
+        {
+            echo "conncted sucessfully to database ".DB::connection()->getDatabaseName(). "<br/>\r\n";
+            echo "Driver: " . Config::get('database.connections.mysql.driver') . "<br/>\r\n";
+            echo "Host: " . Config::get('database.connections.mysql.host') . "<br/>\r\n";
+            echo "Database: " . Config::get('database.connections.mysql.database') . "<br/>\r\n";
+            echo "Username: " . Config::get('database.connections.mysql.username') . "<br/>\r\n";
+            echo "Password: " . Config::get('database.connections.mysql.password') . "<br/>\r\n";
+            return;
+        }*/
+
+
+
+        // Previous PHP API Starts ----------------//
+        $root = $_SERVER["DOCUMENT_ROOT"];
+
+
+
+        $image = $_POST['image'];
+        $name = $_POST['name'];
+        $message_photo = $_POST['message_photo'];
+        $realImage = base64_decode($image);
+//	echo $message_photo."<br/>";
+        if ($message_photo == "1"){
+            $upload_dir = $root.'public/uploads/messages/';
+            //echo $upload_dir."<br/>";
+            if (!is_dir($upload_dir)) {
+                // dir doesn't exist, make it
+                mkdir($upload_dir, 0777, true);
+            }
+        }
+        else{
+            $upload_dir = $root.'public/uploads/photos/';
+            //echo $upload_dir."<br/>";
+            if (!is_dir($upload_dir)) {
+                // dir doesn't exist, make it
+                mkdir($upload_dir, 0777, true);
+            }
+        }
+
+        file_put_contents($upload_dir.$name, $realImage);
+        echo "Image Uploaded Successfully.";
+
+
+
+
+        // ------------------- Laravel API Starts  ------------------------- //
+
+/*
         $image = $request->input('image');
         $name = $request->input('name');
         $message_photo = $request->input('message_photo');
-        $real_image = base64_decode($image);
+
+
+
+
+        //your base64 encoded data
+
+        $extension = Helper::get_extension($image);
+        $image = Helper::get_image($image);
+        $name = $name.'.'.$extension;
 
         //return gettype($image);
         if ($message_photo == "1"){
@@ -73,28 +173,93 @@ class RemoteRequestController extends Controller
             $upload_dir = '/uploads/photos/'.$name;
         }
 
-        //your base64 encoded data
 
-        $extension = explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];   // .jpg .png .pdf
-        $replace = substr($image, 0, strpos($image, ',')+1);
-        $image = str_replace($replace, '', $image);
-        $image = str_replace(' ', '+', $image);
-        $image = base64_decode($image);
-
-        //$imageName = Str::random(10).'.'.$extension;
-
-        $status = Storage::disk('public')->put($upload_dir, $image);
+        $status = Storage::disk('public')->put($upload_dir, $image,'public');
         if($status)
             return "Image Uploaded Successfully. ";
         else
-            return "Image cannot be uploaded";
+            return "Image cannot be uploaded";*/
 
     }
 
 
     public function place_order(Request $request)
     {
-        $front = $request->input('front');
+        // --------------- Previous PHP API Starts -------------------- //
+
+
+        $front = base64_decode($_POST['front']);
+        $back = base64_decode($_POST['back']);
+        $userID = (int)($_POST['user_id']);
+        $packageID = (int)($_POST['package_id']);
+        $glossy = (int)($_POST['glossy']);
+        $spot = (int)($_POST['spot']);
+        $rounded = (int)($_POST['rounded']);
+        $total_price = (double)($_POST['total_price']);
+        $phone = $_POST['phone'];
+        $address = $_POST['address'];
+        $label = $_POST['label'];
+///
+        $images = json_decode($_POST['images']);
+//echo $images;
+// echo "<br>".gettype($images);
+
+///
+
+
+        $servername = Config::get('database.connections.mysql.host');
+        $username = Config::get('database.connections.mysql.username');
+        $password = 'aLNFA0t7m4IW';
+        $dbname = Config::get('database.connections.mysql.database');
+
+// Create connection
+        $conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+//echo "Connected successfully";
+
+        $sql = "INSERT INTO orders (userID, packageID, glossy, spot, rounded, total_price) VALUES(" . $userID . "," . $packageID . "," . $glossy . "," . $spot . "," . $rounded . "," . $total_price . ")";
+
+
+        if ($conn->query($sql) === TRUE) {
+            $orderID = $conn->insert_id;
+
+            //
+            $upload_dir = 'uploads/orders/' . $orderID;
+            if (!is_dir($upload_dir)) {
+                mkdir($upload_dir, 0777, true);
+            }
+            file_put_contents($upload_dir . '/front.jpg', $front);
+            file_put_contents($upload_dir . '/back.jpg', $back);
+
+//
+            //$tmp = 1
+            foreach ($images as &$img) {
+                file_put_contents($upload_dir . '/img' . $tmp . 'jpg', base64_decode($img));
+                $tmp = $tmp + 1;
+            }
+
+//
+            $sql = "UPDATE orders SET orderUrl = '" . $upload_dir . "' WHERE orderID=" . $orderID;
+            $conn->query($sql);
+            $sql_delivery = "INSERT INTO delivery_address(orderID, label, address, phone) VALUES (" . $orderID . ",'" . $label . "','" . $address . "','" . $phone . "')";
+            $conn->query($sql_delivery);
+            echo $orderID;
+            //
+        } else {
+            die("Connection failed: ");
+        }
+
+
+
+
+
+
+        // ----------------- Laravel API Starts --------------------- //
+        /*$front = $request->input('front');
         $back = $request->input('back');
         $user_id = $request->input('user_id');
         $package_id = $request->input('package_id');
@@ -188,7 +353,7 @@ class RemoteRequestController extends Controller
         $delivery->phone = $phone;
         $delivery->save();
          return "Order no : ".$order_id." Uploaded Successfully";
-
+*/
 
 
     }

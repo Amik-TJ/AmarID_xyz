@@ -89,7 +89,7 @@
                     <i class="icon-screen-tablet menu-icon"></i><span class="nav-text font-weight-bold">Blogs & FAQs</span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="/blog">Blogs</a></li>
+                    <li><a href="/blog">Mobile App Blogs</a></li>
                     <li><a href="/web_app_blog">Web App Blogs</a></li>
                     <li><a href="/faq">FAQs</a></li>
                 </ul>

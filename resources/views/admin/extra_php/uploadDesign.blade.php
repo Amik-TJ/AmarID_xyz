@@ -5,9 +5,9 @@
 	$name = $_POST['name'];
 
     $servername = "localhost";
-    $username = $_POST['db_user'];
-    $password = $_POST['db_pass'];
-    $dbname = $_POST['db_name'];
+    $username = 'root';
+    $password = '';
+    $dbname = 'huru';
 
     $upload_dir = 'uploads/designs/'.$name;
     if (!is_dir($upload_dir)) {

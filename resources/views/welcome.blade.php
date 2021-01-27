@@ -357,9 +357,22 @@
             <h1 class="h4 text-center my-4 font-weight-bold">Services for Home</h1>
         </div>
     </div>
+    @php
+        $banner = \App\Models\Banner::get();
+    @endphp
     <div class="row mx-2 mb-5">
         <div class="owl-carousel owl-theme">
-            <div class="item h-100">
+            @foreach($banner as $b)
+                @if($b->banner_row == 1)
+                    <div class="item h-100">
+                        <div class="item h-100">
+                            <h1><img class="img-fluid" src="{{url('storage/'.$b->imgURL)}}" alt="AmarID.xyz"></h1>
+                            <figcaption class="figure-caption text-center font-weight-bold text-danger">{{$b->banner_title}}</figcaption>
+                        </div>
+                    </div>
+                @endif
+            @endforeach
+            {{--<div class="item h-100">
                 <div class="item h-100">
                     <h1><img class="img-fluid" src="/images/carousel/sewing.png" alt="AmarID.xyz"></h1>
                     <figcaption class="figure-caption text-center font-weight-bold text-danger">Sewing</figcaption>
@@ -406,7 +419,7 @@
                     <img class="img-fluid" src="/images/carousel/cleaning.png" alt="">
                     <figcaption class="figure-caption text-center font-weight-bold text-danger">Paint and Renovation</figcaption>
                 </div>
-            </div>
+            </div>--}}
         </div>
     </div>
     {{------------------------------------------Carousel Ends--------------------------------------}}
@@ -421,7 +434,17 @@
     </div>
     <div class="row mx-2 mb-5">
         <div class="owl-carousel owl-theme">
-            <div class="item h-100">
+            @foreach($banner as $b)
+                @if($b->banner_row == 2)
+                    <div class="item h-100">
+                        <div class="item h-100">
+                            <h1><img class="img-fluid" src="{{url('storage/'.$b->imgURL)}}" alt="AmarID.xyz"></h1>
+                            <figcaption class="figure-caption text-center font-weight-bold text-danger">{{$b->banner_title}}</figcaption>
+                        </div>
+                    </div>
+                @endif
+            @endforeach
+            {{--<div class="item h-100">
                 <div class="item h-100">
                     <img class="img-fluid" src="/images/carousel/ac.png" alt="">
                     <figcaption class="figure-caption text-center font-weight-bold text-danger">Ac Servicing</figcaption>
@@ -462,7 +485,7 @@
                     <img class="img-fluid" src="/images/carousel/pesting.png" alt="">
                     <figcaption class="figure-caption text-center font-weight-bold text-danger">Peste Controll</figcaption>
                 </div>
-            </div>
+            </div>--}}
         </div>
     </div>
     {{------------------------------------------Carousel Ends--------------------------------------}}
@@ -603,9 +626,11 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-3"></div>
-                            <div class="col-9 py-3">{!! QrCode::size(200)->generate($card['card_string']) !!}</div>
-
+                            <div class="col text-center">
+                                <img src="{{url('storage/'.$card['qr_path'])}}" alt="">
+                                <a href="{{url('storage/'.$card['qr_path'])}}" download><h5 class="font-weight-bold my-3">Download</h5></a>
+                            </div>
+                            {{--<div class="col-9 py-3">{!! QrCode::size(200)->generate($card['card_string']) !!}</div>--}}
                         </div>
                     </div>
                 </div>

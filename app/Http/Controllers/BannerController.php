@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class BannerController extends Controller
 {
@@ -68,6 +69,9 @@ class BannerController extends Controller
 
     public function create_banner(Request $request)
     {
+        $banner_title = $request->input('banner_title');
+        $banner_row = $request->input('banner_row');  // 1 for Home || 2 for Office
+
         // Getting number of available Sub Fields in DataBase
         $count = DB::table('banners')->count();
         if($count<1)
@@ -92,7 +96,30 @@ class BannerController extends Controller
 
                 $url = 'uploads/banners/';
 
-                $path = $request->banner_image->storePubliclyAs($url, $banner_image,'public');
+                if (!file_exists(storage_path().'/app/public/uploads/banners/')) {
+                    mkdir(storage_path().'/app/public/uploads/banners/', 666, true);
+                }
+
+                $image = $request->file('banner_image');
+                $storing_location = storage_path().'/app/public/uploads/banners/'.$banner_image;
+                $image_resize = Image::make($image->getRealPath());
+                $a = $image_resize->resize(960, 613);
+                /*echo "<pre>";
+                print_r($a);
+                echo "</pre>";
+                return;*/
+                $image_resize->save($storing_location);
+
+
+
+
+
+
+
+
+
+
+                //$path = $image_resize->storeAs($url, $banner_image,'public');
 
 
 
@@ -103,6 +130,8 @@ class BannerController extends Controller
 
                 $banner = new Banner();
                 $banner->bannerID = $banner_no;
+                $banner->banner_title = $banner_title;
+                $banner->banner_row = $banner_row;
                 $banner->imgURL = $url1;
                 $banner->save();
 

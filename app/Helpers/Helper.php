@@ -9,7 +9,7 @@ class Helper
 {
     public static function get_extension(string $string)
     {
-        $extension = explode('/', explode(':', substr($string, 0, strpos($string, ';')))[1])[1];   // .jpg .png .pdf
+        //$extension = explode('/', explode(':', substr($string, 0, strpos($string, ';')))[1])[1];   // .jpg .png .pdf
         //return $extension;
         return 'jpg';
     }
@@ -19,8 +19,8 @@ class Helper
     {
 
         $replace = substr($string, 0, strpos($string, ',')+1);
-        $string = str_replace($replace, '', $string);
-        $string = str_replace(' ', '+', $string);
+        //$string = str_replace($replace, '', $string);
+        //$string = str_replace(' ', '+', $string);
         $string = base64_decode($string);
         return $string;
     }

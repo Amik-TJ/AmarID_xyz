@@ -111,9 +111,11 @@
                             <div class="col-md-6">
                                 <select class="form-control" id="field_id" name="field_id">
                                     <option selected> -------- </option>
+
                                     @foreach($data['field'] as $field)
                                         <option value="{{$field->fieldID}}">{{$field->fieldName}}</option>
                                     @endforeach
+
                                 </select>
                                 @error('field_id')
                                 <span class="invalid-feedback" role="alert">
@@ -176,9 +178,11 @@
                             <label for="field_id" class="col-form-label">Field Type:</label>
                             <select class="form-control" id="field_id" name="field_id">
                                 <option value="">  </option>
+                                @if($data['found'])
                                 @foreach($data['field'] as $field)
                                     <option value="{{$field->fieldID}}">{{$field->fieldName}}</option>
                                 @endforeach
+                                @endif
                             </select>
                         </div>
                         {{-------------------------- Translation ---------------------------}}
