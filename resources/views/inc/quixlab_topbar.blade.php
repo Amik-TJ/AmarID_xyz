@@ -175,14 +175,14 @@
                 <li class="icons dropdown">
                     <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
                         <span class="activity active"></span>
-                        <img src="{{url('storage'.auth()->user()->photo_url)}}" height="40" width="40" alt="">
+                        <img src="{{ auth()->user()->photo_url != null ? url('storage'.auth()->user()->photo_url):'images/avatar/dummy.png'}}" height="40" width="40" alt="">
                     </div>
                     <div class="drop-down dropdown-profile animated fadeIn dropdown-menu">
                         <div class="dropdown-content-body">
                             <ul>
-                                {{--<li>
-                                    <a href=""><i class="icon-user"></i> <span>Profile</span></a>
-                                </li>--}}
+                                <li>
+                                    <a href="/edit_profile"><i class="icon-user"></i> <span>Edit Profile</span></a>
+                                </li>
                                 <li>
                                     <a href="/see_more_message">
                                         <i class="icon-envelope-open"></i> <span>Inbox</span> <div class="badge gradient-3 badge-pill @if($message['seen_count']) gradient-1 @endif">{{$message['seen_count']}}</div>

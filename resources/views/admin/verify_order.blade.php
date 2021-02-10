@@ -82,10 +82,10 @@
                                         <td>No Images</td>
                                     @else
                                         <td>
-                                            <img src="{{url('storage/'.$order->orderUrl.'/resize_front.jpg')}}" alt="No Image" style="height: 40px;width: 60px;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);">
+                                            <img src="{{url('storage/'.$order->orderUrl.'/front.jpg')}}" alt="No Image" style="height: 40px;width: 60px;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);">
                                         </td>
                                         <td>
-                                            <img src="{{url('storage/'.$order->orderUrl.'/resize_back.jpg')}}" alt="No Image" style="height: 40px;width: 60px;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);">
+                                            <img src="{{url('storage/'.$order->orderUrl.'/back.jpg')}}" alt="No Image" style="height: 40px;width: 60px;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);">
                                         </td>
                                     @endif
                                     <td>

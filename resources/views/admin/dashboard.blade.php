@@ -49,7 +49,7 @@
                                     </div>
                                 </div>
                                 <div class="media align-items-center mb-4">
-                                    <img class="mr-3" src="{{url('storage'.auth()->user()->photo_url)}}" width="80" height="80" alt="">
+                                    <img class="mr-3" src="{{ auth()->user()->photo_url != null ? url('storage'.auth()->user()->photo_url):'images/avatar/dummy.png'}}" width="80" height="80" alt="">
                                     <div class="media-body">
                                         <h3 class="mb-0">{{auth()->user()->firstname.' '.auth()->user()->lastname}}</h3>
                                         <p class="text-muted mb-0">

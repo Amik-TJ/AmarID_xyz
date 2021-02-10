@@ -32,8 +32,8 @@
                             <table class="table v-middle  table-hover" id="my_table">
                                 <thead>
                                 <tr class="bg-light">
-                                    <th class="border-top-0">#</th>
                                     <th class="border-top-0">Order ID</th>
+                                    <th class="border-top-0">Customer Name</th>
                                     <th class="border-top-0">Order Status</th>
                                     <th class="border-top-0">User ID</th>
                                     <th class="border-top-0">Package ID</th>
@@ -45,18 +45,16 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @php
-                                $count = 0;
-                                @endphp
+
                                 @foreach($data['data'] as $all)
                                 <tr>
-                                    <td>{{++$count}}</td>
                                     <td>{{$all->orderID}}</td>
+                                    <td>{{$all->firstname.' '.$all->lastname}}</td>
                                     <td>{{$all->status}}</td>
                                     <td>{{$all->userID}}</td>
                                     <td>{{$all->packageID}}</td>
                                     <td>{{$all->title}}</td>
-                                    <td>{{$all->placed}}</td>
+                                    <td>{{(new DateTime($all->placed))->format("d-m-Y h:i A")}}</td>
                                     <td>
                                         @if($all->glossy)
                                             Glossy
@@ -64,17 +62,12 @@
                                             Normal
                                         @endif
                                     </td>
-                                   {{--@if($all->orderUrl == null)
-                                        <td>No Images</td>
-                                        <td>No Images</td>
-                                    @else--}}
                                         <td>
-                                            <img src="{{url('storage/'.$all->orderUrl.'/resize_front.jpg')}}" alt="No Images" style="height: 40px;width: 60px;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);">
+                                            <img src="{{url('storage/'.$all->orderUrl.'/front.jpg')}}" alt="No Images" style="height: 40px;width: 60px;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);">
                                         </td>
                                         <td>
-                                            <img src="{{url('storage/'.$all->orderUrl.'/resize_back.jpg')}}" alt="No Images" style="height: 40px;width: 60px;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);">
+                                            <img src="{{url('storage/'.$all->orderUrl.'/back.jpg')}}" alt="No Images" style="height: 40px;width: 60px;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);">
                                         </td>
-                                    {{--@endif--}}
                                 </tr>
                                 @endforeach
                                 </tbody>

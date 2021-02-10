@@ -360,66 +360,20 @@
     @php
         $banner = \App\Models\Banner::get();
     @endphp
+
     <div class="row mx-2 mb-5">
         <div class="owl-carousel owl-theme">
             @foreach($banner as $b)
                 @if($b->banner_row == 1)
                     <div class="item h-100">
-                        <div class="item h-100">
-                            <h1><img class="img-fluid" src="{{url('storage/'.$b->imgURL)}}" alt="AmarID.xyz"></h1>
+                        <div class="item h-100" >
+                            <h1><img class="img-fluid" src="{{url('storage/'.$b->imgURL)}}" alt="{{$b->banner_seo}}" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);"></h1>
                             <figcaption class="figure-caption text-center font-weight-bold text-danger">{{$b->banner_title}}</figcaption>
                         </div>
                     </div>
                 @endif
             @endforeach
-            {{--<div class="item h-100">
-                <div class="item h-100">
-                    <h1><img class="img-fluid" src="/images/carousel/sewing.png" alt="AmarID.xyz"></h1>
-                    <figcaption class="figure-caption text-center font-weight-bold text-danger">Sewing</figcaption>
-                </div>
-            </div>
-            <div class="item h-100">
-                <div class="item h-100">
-                    <h1><img class="img-fluid" src="/images/carousel/fridge.png" alt="AmarID.xyz"></h1>
-                    <figcaption class="figure-caption text-center font-weight-bold text-danger">Fridge Repair</figcaption>
-                </div>
-            </div>
-            <div class="item h-100">
-                <div class="item h-100">
-                    <h1><img class="img-fluid" src="/images/carousel/saloon.png" alt="Amarid.xyz"></h1>
-                    <figcaption class="figure-caption text-center font-weight-bold text-danger">Beauty and Saloon</figcaption>
-                </div>
-            </div>
-            <div class="item h-100">
-                <div class="item h-100">
-                    <h1><img class="img-fluid" src="/images/carousel/geyser.png" alt="AmarID.xyz"></h1>
-                    <figcaption class="figure-caption text-center font-weight-bold text-danger">Geyser Repair</figcaption>
-                </div>
-            </div>
-            <div class="item h-100">
-                <div class="item h-100">
-                    <img class="img-fluid" src="/images/carousel/washing_machine.png" alt="">
-                    <figcaption class="figure-caption text-center font-weight-bold text-danger">Washing Machine Repair</figcaption>
-                </div>
-            </div>
-            <div class="item h-100">
-                <div class="item h-100">
-                    <img class="img-fluid" src="/images/carousel/shifting.png" alt="">
-                    <figcaption class="figure-caption text-center font-weight-bold text-danger">Delivery and Shifting</figcaption>
-                </div>
-            </div>
-            <div class="item h-100">
-                <div class="item h-100">
-                    <img class="img-fluid" src="/images/carousel/plumber.png" alt="">
-                    <figcaption class="figure-caption text-center font-weight-bold text-danger">Plumber</figcaption>
-                </div>
-            </div>
-            <div class="item h-100">
-                <div class="item h-100">
-                    <img class="img-fluid" src="/images/carousel/cleaning.png" alt="">
-                    <figcaption class="figure-caption text-center font-weight-bold text-danger">Paint and Renovation</figcaption>
-                </div>
-            </div>--}}
+
         </div>
     </div>
     {{------------------------------------------Carousel Ends--------------------------------------}}
@@ -438,54 +392,12 @@
                 @if($b->banner_row == 2)
                     <div class="item h-100">
                         <div class="item h-100">
-                            <h1><img class="img-fluid" src="{{url('storage/'.$b->imgURL)}}" alt="AmarID.xyz"></h1>
+                            <h1><img class="img-fluid" src="{{url('storage/'.$b->imgURL)}}" alt="{{$b->banner_seo}}" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);"></h1>
                             <figcaption class="figure-caption text-center font-weight-bold text-danger">{{$b->banner_title}}</figcaption>
                         </div>
                     </div>
                 @endif
             @endforeach
-            {{--<div class="item h-100">
-                <div class="item h-100">
-                    <img class="img-fluid" src="/images/carousel/ac.png" alt="">
-                    <figcaption class="figure-caption text-center font-weight-bold text-danger">Ac Servicing</figcaption>
-                </div>
-            </div>
-            <div class="item h-100">
-                <div class="item h-100">
-                    <img class="img-fluid" src="/images/carousel/car_penter.png" alt="">
-                    <figcaption class="figure-caption text-center font-weight-bold text-danger">Office Furniture</figcaption>
-                </div>
-            </div>
-            <div class="item h-100">
-                <div class="item h-100">
-                    <img class="img-fluid" src="/images/carousel/cleaning.png" alt="">
-                    <figcaption class="figure-caption text-center font-weight-bold text-danger">Cleaning</figcaption>
-                </div>
-            </div>
-            <div class="item h-100">
-                <div class="item h-100">
-                    <img class="img-fluid" src="/images/carousel/door.png" alt="">
-                    <figcaption class="figure-caption text-center font-weight-bold text-danger">Door Repair</figcaption>
-                </div>
-            </div>
-            <div class="item h-100">
-                <div class="item h-100">
-                    <img class="img-fluid" src="/images/carousel/shifting.png" alt="">
-                    <figcaption class="figure-caption text-center font-weight-bold text-danger">Delivery and Shifting</figcaption>
-                </div>
-            </div>
-            <div class="item h-100">
-                <div class="item h-100">
-                    <img class="img-fluid" src="/images/carousel/electric.png" alt="">
-                    <figcaption class="figure-caption text-center font-weight-bold text-danger">Electric Repair</figcaption>
-                </div>
-            </div>
-            <div class="item h-100">
-                <div class="item h-100">
-                    <img class="img-fluid" src="/images/carousel/pesting.png" alt="">
-                    <figcaption class="figure-caption text-center font-weight-bold text-danger">Peste Controll</figcaption>
-                </div>
-            </div>--}}
         </div>
     </div>
     {{------------------------------------------Carousel Ends--------------------------------------}}

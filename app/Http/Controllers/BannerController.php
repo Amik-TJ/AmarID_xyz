@@ -71,6 +71,7 @@ class BannerController extends Controller
     {
         $banner_title = $request->input('banner_title');
         $banner_row = $request->input('banner_row');  // 1 for Home || 2 for Office
+        $banner_seo = $request->input('banner_seo');  // 1 for Home || 2 for Office
 
         // Getting number of available Sub Fields in DataBase
         $count = DB::table('banners')->count();
@@ -104,10 +105,6 @@ class BannerController extends Controller
                 $storing_location = storage_path().'/app/public/uploads/banners/'.$banner_image;
                 $image_resize = Image::make($image->getRealPath());
                 $a = $image_resize->resize(960, 613);
-                /*echo "<pre>";
-                print_r($a);
-                echo "</pre>";
-                return;*/
                 $image_resize->save($storing_location);
 
 
@@ -131,6 +128,7 @@ class BannerController extends Controller
                 $banner = new Banner();
                 $banner->bannerID = $banner_no;
                 $banner->banner_title = $banner_title;
+                $banner->banner_seo = $banner_seo;
                 $banner->banner_row = $banner_row;
                 $banner->imgURL = $url1;
                 $banner->save();

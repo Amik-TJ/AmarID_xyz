@@ -11,7 +11,11 @@
                         <h5 class="card-subtitle text-danger h3 mb-0">No Sub Field have been created yet!</h5>
                     @endif
                     <button type="button" class="btn-sm btn-success shadow-sm" data-toggle="modal" data-target="#create_sub_field_modal"><i class="fas fa-address-card"></i>
-                        Create a Sub New Field</button>
+                        Create a Sub New Field
+                    </button>
+                    <button type="button" class="btn-sm btn-success shadow-sm" data-toggle="modal" data-target="#csv_sub_field_modal"><i class="fas fa-address-card"></i>
+                        Upload CSV
+                    </button>
                 </div>
             </div>
         {{----------------------------------Table Starts-------------------------------------------}}
@@ -147,6 +151,49 @@
     </div>
     <!------------------------------------Add Sub Field Modal Ends ------------------------------->
 
+    <!------------------------------------Add CSV / Excel Modal Starts ------------------------------->
+    <div class="modal fade" id="csv_sub_field_modal" tabindex="-1" role="dialog" aria-labelledby="csv_sub_field_modalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-success" id="csv_sub_field_modalTitle">Upload CSV</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="text-center my-3 text-primary">
+                        Format : field_id || sub_field_name || translation
+                    </div>
+                    <form method="POST" action="/upload_sub_field_csv" enctype="multipart/form-data">
+                        @csrf
+
+                        {{-------------------------- Form Fields ---------------------}}
+
+
+
+                        {{-------------------------- Station Journey Date ---------------------}}
+
+                        <div class="form-group row">
+                            <label for="sub_field_csv" class="col-md-4 col-form-label text-md-right mr-3">{{ __('CSV/Excel') }}</label>
+                            <div class="col-md-6 custom-file">
+                                <input type="file" class="custom-file-input" id="sub_field_csv" name="sub_field_csv">
+                                <label class="custom-file-label" for="sub_field_csv"></label>
+                            </div>
+                        </div>
+                        {{-------------------------- Create Button ---------------------}}
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success">Upload</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!------------------------------------Add Sub Field Modal Ends ------------------------------->
 
 
     <!--------------------------------Edit Modal Starts------------------------------------>
@@ -205,6 +252,13 @@
 @endsection
 
 @section('edit_js')
+    <script>
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script>
     <script>
         $('#edit_sub_field_modal').on('show.bs.modal', function (event) {
 

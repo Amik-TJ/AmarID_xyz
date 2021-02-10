@@ -204,7 +204,7 @@ class VerifyOrderController extends Controller
         $notification = new Notifications();
         $notification->userID = $user_id;
         $notification->message = $notification_message;
-        $notification->type = 5; // Type 5 for Processing
+        $notification->type = 4.2; // Type 5 for Processing
         $notification->time = now();
         $notification->seen = 0;
         $notification->save();
@@ -213,7 +213,7 @@ class VerifyOrderController extends Controller
         if($user_info->deviceID != null)
         {
             $push = new PushNotificationController();
-            $push->push_notification_android($user_info->deviceID,$notification_message);
+            $push->push_notification_android($user_info->deviceID,$notification_message,4.2);
         }
 
 

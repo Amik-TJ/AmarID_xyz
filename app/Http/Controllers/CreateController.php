@@ -15,17 +15,14 @@ class CreateController extends Controller
 
            'first_name'=>'required',
            'last_name'=>'required',
-           'company_name'=>'required',
            'title'=>'required',
            'phone_business'=>'required|max:11|min:11|unique:App\Models\Card,phone_business|unique:App\Models\Card,phone_personal',
            'phone_personal'=>'unique:App\Models\Card,phone_personal|required|max:11|min:11',
            'email_business'=>'required|unique:App\Models\Card,email_business',
-           'email_personal'=>'required|email|unique:App\Models\Card,email_personal',
+           'email_personal'=>'email|unique:App\Models\Card,email_personal',
            'street_address'=>'required',
-           'zip_code'=>'required',
            'city'=>'required',
            'country'=>'required',
-           'website'=>'required'
        ]);
        $card = new Card();
        $card->userID = Auth::id();;

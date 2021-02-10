@@ -62,10 +62,10 @@
                                         <td>No Images</td>
                                     @else
                                         <td>
-                                            <img src="{{$package->orderUrl.'/resize_front.jpg'}}" alt="" style="height: 40px;width: 60px;">
+                                            <img src="{{url('storage/'.$package->orderUrl.'/front.jpg')}}" alt="" style="height: 40px;width: 60px;">
                                         </td>
                                         <td>
-                                            <img src="{{$package->orderUrl.'/resize_back.jpg'}}" alt="" style="height: 40px;width: 60px;">
+                                            <img src="{{url('storage/'.$package->orderUrl.'/back.jpg')}}" alt="" style="height: 40px;width: 60px;">
                                         </td>
                                     @endif
                                 </tr>

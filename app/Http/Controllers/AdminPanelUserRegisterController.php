@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\VerifyUserImport;
 use App\Models\Verify_User;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -10,7 +11,8 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
-
+//use Maatwebsite\Excel\Excel;
+use Excel;
 
 class AdminPanelUserRegisterController extends Controller
 {
@@ -219,18 +221,11 @@ class AdminPanelUserRegisterController extends Controller
     {
 
         $request->validate([
-            'csv_file' => 'required|mimes:csv,txt'
+            'csv_file' => 'required|mimes:csv,txt,xls,xlsx'
         ]);
 
-        $file = file($request->csv_file->getRealPath());
+        Excel::import(new VerifyUserImport, $request->csv_file);
 
-        //$data = array_slice($file,1);
-
-        $data = array_map('str_getcsv',$file($request->input('csv_file')));
-
-        foreach ($data as $row)
-        {
-            dd($row);
-        }
+        return redirect('/admin_user_registration')->with('success','Data Inserted Successfully');
     }
 }

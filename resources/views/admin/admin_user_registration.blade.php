@@ -17,6 +17,9 @@
                                             <p class="text-dark px-4 font-weight-bold">
                                                 Register using CSV
                                             </p>
+                                            <div class="text-center text-primary my-3">
+                                                Format : name || phone || email || service_area || service_type || designation
+                                            </div>
                                         </div>
                                         <div class="div">
                                             <form method="POST" action="/register_user_csv" enctype="multipart/form-data">

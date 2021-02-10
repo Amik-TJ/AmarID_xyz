@@ -153,6 +153,7 @@ Route::get('/sub_field', '\App\Http\Controllers\SubFieldController@index')->midd
 Route::post('/create_new_sub_field', '\App\Http\Controllers\SubFieldController@create_sub_field')->middleware('admin'); // Create Sub Field
 Route::post('/delete_sub_field', '\App\Http\Controllers\SubFieldController@delete_sub_field')->middleware('admin'); // Delete Sub Field
 Route::post('/edit_sub_field', '\App\Http\Controllers\SubFieldController@edit_sub_field')->middleware('admin'); // Edit Sub Field
+Route::post('/upload_sub_field_csv', '\App\Http\Controllers\SubFieldController@upload_sub_field_csv')->middleware('admin'); // Upload Via CSV
 
 
 
@@ -194,4 +195,13 @@ Route::get('/user_dashboard','\App\Http\Controllers\User\UserDashboardController
 // Common Routes For All user
 Route::get('/show_more_notification','\App\Http\Controllers\Common_Controllers\NotificationController@index')->middleware('auth');
 Route::get('/see_more_message','\App\Http\Controllers\Common_Controllers\MessageController@index')->middleware('auth');
-Route::get('/see_full_conversation','\App\Http\Controllers\Common_Controllers\MessageController@show_full_conversation')->middleware('auth');
+Route::POST('/see_full_conversation','\App\Http\Controllers\Common_Controllers\MessageController@show_full_conversation')->middleware('auth');
+Route::POST('/send_message','\App\Http\Controllers\Common_Controllers\MessageController@send_message')->middleware('auth');
+Route::POST('/search_people','\App\Http\Controllers\Common_Controllers\MessageController@search_people')->middleware('auth');
+
+
+// Edit Profile
+
+Route::GET('/edit_profile','\App\Http\Controllers\Common_Controllers\EditProfileController@index')->middleware('auth');
+Route::POST('/change_password','\App\Http\Controllers\Common_Controllers\EditProfileController@change_password')->middleware('auth');
+Route::POST('/change_profile_picture','\App\Http\Controllers\Common_Controllers\EditProfileController@change_profile_picture')->middleware('auth');

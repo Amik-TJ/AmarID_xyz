@@ -55,11 +55,11 @@ class CancelOrderController extends Controller
         if($order_update)
         {
             // Inserting Data in Notification Table
-            $notification_message = "Your Order Has been Cancelled";
+            $notification_message = "Your Order has been Cancelled";
             $notification = new Notifications();
             $notification->userID = $user_id;
             $notification->message = $notification_message;
-            $notification->type = 8; // Type 8 for Cancelled
+            $notification->type = 4.5; // Type 8 for Cancelled
             $notification->time = now();
             $notification->seen = 0;
             $notification->save();
@@ -69,7 +69,7 @@ class CancelOrderController extends Controller
             if($device_id != null)
             {
                 $push = new PushNotificationController();
-                $push->push_notification_android($device_id,$notification_message);
+                $push->push_notification_android($device_id,$notification_message, 4.5);
             }
 
 

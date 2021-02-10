@@ -13,7 +13,9 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use League\Flysystem\File;
 use mysqli;
-
+use App\Models\Notifications;
+use App\Models\User;
+use Throwable;
 class RemoteRequestController extends Controller
 {
 
@@ -27,32 +29,32 @@ class RemoteRequestController extends Controller
         $json = $_POST['json'];
         $name = $_POST['name'];
 
-        $servername = Config::get('database.connections.mysql.host');
-        $username = Config::get('database.connections.mysql.username');
-        $password = 'aLNFA0t7m4IW';
-        $dbname = Config::get('database.connections.mysql.database');
+
 
         $upload_dir = 'uploads/designs/'.$name;
-        if (!is_dir($upload_dir)) {
+        /*if (!is_dir($upload_dir)) {
             mkdir($upload_dir, 0777, true);
-        }
-        file_put_contents($upload_dir.'/front.jpg', $front);
-        file_put_contents($upload_dir.'/back.jpg', $back);
+        }*/
 
-        // Create connection
-        $conn = new mysqli($servername, $username, $password, $dbname);
-        $json = $conn->real_escape_string($json);
-        // Check connection
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-        //echo "Connected successfully";
+        Storage::disk('public')->put($upload_dir.'/front.jpg', $front,'public');
+        Storage::disk('public')->put($upload_dir.'/back.jpg', $back,'public');
+
+
+        //file_put_contents($upload_dir.'/front.jpg', $front);
+        //file_put_contents($upload_dir.'/back.jpg', $back);
+
+
         $fu = $upload_dir . "/front.jpg";
         $bu = $upload_dir . "/back.jpg";
 
-        $sql = "INSERT INTO predesigned (json, frontUrl, backUrl) VALUES('" . $json . "','" . $fu . "','" . $bu ."')";
-        //echo $sql;
-        $conn->query($sql);
+        $predesigned = new Predesigned();
+        $predesigned->json = $json;
+        $predesigned->frontUrl = $fu;
+        $predesigned->backUrl = $bu;
+        $predesigned->save();
+        return "Uploaded Successfully. ";
+
+
 
 
 
@@ -126,7 +128,7 @@ class RemoteRequestController extends Controller
         $message_photo = $_POST['message_photo'];
         $realImage = base64_decode($image);
 //	echo $message_photo."<br/>";
-        if ($message_photo == "1"){
+        /*if ($message_photo == "1"){
             $upload_dir = $root.'public/uploads/messages/';
             //echo $upload_dir."<br/>";
             if (!is_dir($upload_dir)) {
@@ -144,7 +146,23 @@ class RemoteRequestController extends Controller
         }
 
         file_put_contents($upload_dir.$name, $realImage);
-        echo "Image Uploaded Successfully.";
+        echo "Image Uploaded Successfully.";*/
+
+
+        //return gettype($image);
+        if ($message_photo == "1"){
+            $upload_dir = '/uploads/messages/'.$name;
+        }
+        else{
+            $upload_dir = '/uploads/photos/'.$name;
+        }
+
+
+        $status = Storage::disk('public')->put($upload_dir, $realImage,'public');
+        if($status)
+            return "Image Uploaded Successfully. ";
+        else
+            return "Image cannot be uploaded";
 
 
 
@@ -187,7 +205,7 @@ class RemoteRequestController extends Controller
     {
         // --------------- Previous PHP API Starts -------------------- //
 
-
+/*
         $front = base64_decode($_POST['front']);
         $back = base64_decode($_POST['back']);
         $userID = (int)($_POST['user_id']);
@@ -199,162 +217,107 @@ class RemoteRequestController extends Controller
         $phone = $_POST['phone'];
         $address = $_POST['address'];
         $label = $_POST['label'];
-///
+        $json_txt = $_POST['json'];
+
         $images = json_decode($_POST['images']);
-//echo $images;
-// echo "<br>".gettype($images);
-
-///
-
-
-        $servername = Config::get('database.connections.mysql.host');
-        $username = Config::get('database.connections.mysql.username');
-        $password = 'aLNFA0t7m4IW';
-        $dbname = Config::get('database.connections.mysql.database');
-
-// Create connection
-        $conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-//echo "Connected successfully";
-
-        $sql = "INSERT INTO orders (userID, packageID, glossy, spot, rounded, total_price) VALUES(" . $userID . "," . $packageID . "," . $glossy . "," . $spot . "," . $rounded . "," . $total_price . ")";
-
-
-        if ($conn->query($sql) === TRUE) {
-            $orderID = $conn->insert_id;
-
-            //
-            $upload_dir = 'uploads/orders/' . $orderID;
-            if (!is_dir($upload_dir)) {
-                mkdir($upload_dir, 0777, true);
-            }
-            file_put_contents($upload_dir . '/front.jpg', $front);
-            file_put_contents($upload_dir . '/back.jpg', $back);
-
-//
-            //$tmp = 1
-            foreach ($images as &$img) {
-                file_put_contents($upload_dir . '/img' . $tmp . 'jpg', base64_decode($img));
-                $tmp = $tmp + 1;
-            }
-
-//
-            $sql = "UPDATE orders SET orderUrl = '" . $upload_dir . "' WHERE orderID=" . $orderID;
-            $conn->query($sql);
-            $sql_delivery = "INSERT INTO delivery_address(orderID, label, address, phone) VALUES (" . $orderID . ",'" . $label . "','" . $address . "','" . $phone . "')";
-            $conn->query($sql_delivery);
-            echo $orderID;
-            //
-        } else {
-            die("Connection failed: ");
-        }
 
 
 
+*/
 
 
-
-        // ----------------- Laravel API Starts --------------------- //
-        /*$front = $request->input('front');
-        $back = $request->input('back');
-        $user_id = $request->input('user_id');
-        $package_id = $request->input('package_id');
-        $glossy = $request->input('glossy');
-        $spot = $request->input('glossy');
-        $rounded = $request->input('rounded');
-        $total_price = $request->input('total_price');
+        $front = base64_decode($request->input('front'));
+        $back = base64_decode($request->input('back'));
+        $userID = (int)($request->input('user_id'));
+        $packageID = (int)($request->input('package_id'));
+        $glossy = (int)($request->input('glossy'));
+        $spot = (int)($request->input('spot'));
+        $rounded = (int)($request->input('rounded'));
+        $total_price = (double)($request->input('total_price'));
         $phone = $request->input('phone');
         $address = $request->input('address');
         $label = $request->input('label');
-        $json = $request->input('json');
-
-
-        /// Kahini Ase
+        $json_txt = $request->input('json');
         $images = json_decode($request->input('images'));
 
 
 
         $orders = new Orders();
-        $orders->userID = $user_id;
-        $orders->packageID = $package_id;
+        $orders->userID = $userID;
+        $orders->packageID = $packageID;
         $orders->glossy = $glossy;
         $orders->spot = $spot;
         $orders->rounded = $rounded;
         $orders->total_price = $total_price;
-        $orders->json = $json;
+        $orders->json = $json_txt;
         $orders->save();
-        $order_id =  $orders->orderID;
+        $orderID =  $orders->orderID;
+
+        $upload_dir = 'uploads/orders/' . $orderID;
 
 
-
-        // Image Processing
-        $extension_f = Helper::get_extension($front);
-        $front = Helper::get_image($front);
-
-        $extension_b = Helper::get_extension($back);
-        $back = Helper::get_image($back);
-
-
-        // File Name
-        $front_name = 'front.'.$extension_f;
-        $back_name = 'back.'.$extension_b;
-        // Upload Directory
-        $upload_dir = 'uploads/orders/' . $order_id.'/';
-        $front_url = $upload_dir.$front_name;
-        $back_url = $upload_dir.$back_name;
-        // Return $upload_dir;
+        $ordr = Orders::find($orderID);
+        $ordr->orderUrl = $upload_dir;
+        $ordr->save();
+        /*if (!is_dir($upload_dir)) {
+            mkdir($upload_dir, 0777, true);
+        }
+        file_put_contents($upload_dir . '/front.jpg', $front);
+        file_put_contents($upload_dir . '/back.jpg', $back);*/
 
 
-        $front_status = Storage::disk('public')->put($front_url, $front,'public');
-        $back_status = Storage::disk('public')->put($back_url, $back,'public');
-
-
-
-
-        //Resize Image
-        $resize_image_front_dir = $upload_dir.'resize_front.jpg';
-        $resize_image_back_dir = $upload_dir.'resize_back.jpg';
-        $resize_image_front = Helper::image_resize($front,200,150);
-        $resize_image_back = Helper::image_resize($back,200,150);
-        $resize_status_front = Storage::disk('public')->put($resize_image_front_dir, $resize_image_front,'public');
-        $resize_status_back = Storage::disk('public')->put($resize_image_back_dir, $resize_image_back,'public');
-
-
-
-
-
-        $orders = Orders::find($order_id);
-        $orders->orderUrl = $upload_dir;
-        $orders->save();
-
-
-        $tmp = 1;
-        foreach ($images as $img) {
-            $extension_img = Helper::get_extension($img);
-            $img = Helper::get_image($img);
-
-
-            //Upload URL
-            $img_upload_dir = $upload_dir.'/img'.$tmp.'.'.$extension_img;
-            $img_status = Storage::disk('public')->put($img_upload_dir, $img,'public');
-            //file_put_contents($upload_dir . '/img' . $tmp . 'jpg', base64_decode($img));
-            $tmp = $tmp + 1;
+        try {
+            Storage::disk('public')->put($upload_dir . '/front.jpg', $front,'public');
+            Storage::disk('public')->put($upload_dir . '/back.jpg', $back,'public');
+        }
+        catch (Throwable $e) {
+            report($e);
+            echo 'Message: ' .$e->getMessage();;
         }
 
 
+//
+        $tmp = 1;
+        foreach ($images as &$img) {
+            $img_upload_dir = $upload_dir.'/img'.$tmp.'.jpg';
+            Storage::disk('public')->put($img_upload_dir, base64_decode($img),'public');
+            //file_put_contents($upload_dir . '/img' . $tmp . 'jpg', base64_decode($img));
+            $tmp = $tmp + 1;
+//                file_put_contents($upload_dir . '/img' . $tmp . 'jpg', base64_decode($img));
+            //              $tmp = $tmp + 1;
+        }
+
+
+
         $delivery = new DeliveryAddress();
-        $delivery->orderID = $order_id;
+        $delivery->orderID = $orderID;
         $delivery->label = $label;
         $delivery->address = $address;
         $delivery->phone = $phone;
         $delivery->save();
-         return "Order no : ".$order_id." Uploaded Successfully";
-*/
 
+
+
+        // Inserting Data in Notification Table
+        $notification_message = "Your Order has been Placed";
+        $notification = new Notifications();
+        $notification->userID = $userID;
+        $notification->message = $notification_message;
+        $notification->type = 4.1; // Type 4.1 for Order Placed
+        $notification->time = now();
+        $notification->seen = 0;
+        $notification->save();
+
+        $device_id = User::where('userID',$userID)->select('deviceID')->first();
+
+        // Sending Push Notification
+        if($device_id != null)
+        {
+            $push = new PushNotificationController();
+            $push->push_notification_android($device_id,$notification_message,4.1);
+        }
+
+        return "{$orderID}";
 
     }
 

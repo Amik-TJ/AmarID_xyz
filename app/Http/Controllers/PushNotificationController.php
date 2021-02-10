@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class PushNotificationController extends Controller
 {
-    function push_notification_android($device_id, $message)
+    function push_notification_android($device_id, $message, $notification_code)
     {
 
         //API URL of FCM
@@ -26,6 +26,7 @@ class PushNotificationController extends Controller
             'data' => array(
                 'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
                 'status' => 'done',
+                'code' => $notification_code
             )
         );
         //header includes Content type and api key

@@ -23,9 +23,10 @@
                     <div class="card h-100">
                         <img class="img-fluid" src="{{url('storage/'.$banner->imgURL)}}"  alt="">
                         <div class="card-body">
-                            <h5 class="card-title">Banner No : <span class="text-danger">{{$banner->bannerID}}</span></h5>
-                            <h5 class="card-title">Title : <span class="text-danger">{{$banner->banner_title}}</span></h5>
-                            <h5 class="card-title">Type :
+                            <h6 class="card-title">Banner No : <span class="text-primary">{{$banner->bannerID}}</span></h6>
+                            <h6 class="card-title">Title : <span class="text-primary">{{$banner->banner_title}}</span></h6>
+                            <h6 class="card-title">SEO : <span class="text-primary">{{$banner->banner_seo}}</span></h6>
+                            <h6 class="card-title">Type :
                                 <span class="text-danger">
                                     @if($banner->banner_row == 1 )
                                         For Home
@@ -35,7 +36,7 @@
                                         Not selected
                                     @endif
                                 </span>
-                            </h5>
+                            </h6>
                         </div>
                         <div class="card-footer">
                             <form action="/delete_banner" method="Post">
@@ -78,6 +79,15 @@
 
                         <div class="col-md-6">
                             <input id="banner_title" type="text" class="form-control" name="banner_title" value="{{ old('banner_title') }}"  autocomplete="banner_title" autofocus required>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label for="banner_seo" class="col-md-4 col-form-label text-md-right">{{ __('Banner SEO') }}</label>
+
+                        <div class="col-md-6">
+                            <input id="banner_seo" type="text" class="form-control" name="banner_seo" value="{{ old('banner_seo') }}"  autocomplete="banner_seo" autofocus >
                         </div>
                     </div>
 

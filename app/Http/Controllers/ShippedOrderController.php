@@ -111,7 +111,7 @@ class ShippedOrderController extends Controller
         $notification = new Notifications();
         $notification->userID = $user_id;
         $notification->message = $notification_message;
-        $notification->type = 7; // Type 7 for Processing
+        $notification->type = 4.4; // Type 7 for Processing
         $notification->time = now();
         $notification->seen = 0;
         $notification->save();
@@ -121,7 +121,7 @@ class ShippedOrderController extends Controller
         if($user_info->deviceID != null)
         {
             $push = new PushNotificationController();
-            $push->push_notification_android($user_info->deviceID,$notification_message);
+            $push->push_notification_android($user_info->deviceID,$notification_message,4.4);
         }
 
         return redirect('/shipped_order')->with('success', 'OrderID No : '.$order_id.' marked as Delivered');

@@ -141,4 +141,21 @@ class Helper
         }
         return  '/user_dashboard';
     }
+
+
+
+    public static function conversation_id_search($arr, $sender, $receiver)
+    {
+        foreach ($arr as $a)
+        {
+            if($a['s'] == $sender && $a['r'] == $receiver)
+            {
+                return true;
+            }elseif ($a['r'] == $sender && $a['s'] == $receiver)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }

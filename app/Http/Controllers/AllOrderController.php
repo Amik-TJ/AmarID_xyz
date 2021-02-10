@@ -20,7 +20,7 @@ class AllOrderController extends Controller
         $all_orders = DB::table('orders')
             ->join('users', 'orders.userID', '=', 'users.userID')
             ->join('packages', 'orders.packageID', '=', 'packages.packageID')
-            ->select('orders.userID','orders.orderID','orders.packageID','orders.orderUrl','orders.status','orders.placed','orders.glossy', 'packages.title', )
+            ->select('orders.userID','orders.orderID','orders.packageID','orders.orderUrl','orders.status','orders.placed','orders.glossy', 'packages.title', 'users.firstname','users.lastname')
             ->orderBy('orders.orderID', 'asc')
             ->get();
 

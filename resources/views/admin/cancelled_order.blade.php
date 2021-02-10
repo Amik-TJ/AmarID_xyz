@@ -62,10 +62,10 @@
                                         <td>No Images</td>
                                     @else
                                         <td>
-                                            <img src="{{$package->orderUrl.'/resize_front.jpg'}}" alt="" style="height: 40px;width: 60px;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);">
+                                            <img src="{{$package->orderUrl.'/front.jpg'}}" alt="" style="height: 40px;width: 60px;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);">
                                         </td>
                                         <td>
-                                            <img src="{{$package->orderUrl.'/resize_back.jpg'}}" alt="" style="height: 40px;width: 60px;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);">
+                                            <img src="{{$package->orderUrl.'/back.jpg'}}" alt="" style="height: 40px;width: 60px;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);">
                                         </td>
                                     @endif
                                 </tr>

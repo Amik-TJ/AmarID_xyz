@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Middleware\TrustHosts;
+use App\Imports\SubFieldImport;
 use App\Models\Field;
 use App\Models\SubField;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Excel;
 
 class SubFieldController extends Controller
 {
@@ -108,5 +110,19 @@ class SubFieldController extends Controller
         else
             return redirect('/sub_field')->with('error','Sub Field no: '.$sub_field_id.' Cannot be deleted');
 
+    }
+
+
+    public function upload_sub_field_csv(Request $request)
+    {
+        $request->validate([
+            'sub_field_csv' => 'required|mimes:csv,txt,xls,xlsx'
+        ]);
+
+
+
+        Excel::import(new SubFieldImport(), $request->sub_field_csv);
+
+        return redirect('/sub_field')->with('success','Data Inserted Successfully');
     }
 }
