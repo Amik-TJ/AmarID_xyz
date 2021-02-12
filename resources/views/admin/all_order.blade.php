@@ -1,8 +1,7 @@
 @extends('layouts.admin_layout')
 
 @section('data_table_bootstrap')
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/searchbuilder/1.0.1/css/searchBuilder.dataTables.min.css">
+    <link href="/plugins/tables/css/datatable/dataTables.bootstrap4.min.css" rel="stylesheet">
 @endsection
 @section('content')
     <div class="container-fluid px-lg-4">
@@ -28,10 +27,10 @@
                         <!-- title -->
                     </div>
                     @if($data['found'])
-                        <div class="table-responsive">
+                        <div class="table-responsive mb-5">
                             <table class="table v-middle  table-hover" id="my_table">
                                 <thead>
-                                <tr class="bg-light">
+                                <tr class="text-white font-weight-bold" style="background: linear-gradient(to right, #ec2F4B, #009FFF);">
                                     <th class="border-top-0">Order ID</th>
                                     <th class="border-top-0">Customer Name</th>
                                     <th class="border-top-0">Order Status</th>

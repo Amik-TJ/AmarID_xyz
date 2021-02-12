@@ -31,81 +31,85 @@
                         <!-- title -->
 
                     @if($data['found'])
-                        <div class="table-responsive">
-                            <table class="display table table-hover" id="on_print_table" style="width:100%">
-                                <thead>
-                                    <tr class="bg-light">
-                                        <th class="border-top-0">Order ID</th>
-                                        <th class="border-top-0">Status</th>
-                                        <th class="border-top-0">Package ID</th>
-                                        <th class="border-top-0">Package Type</th>
-                                        <th class="border-top-0">Customer Name</th>
-                                        <th class="border-top-0">Order Date</th>
-                                        <th class="border-top-0">Card Type</th>
-                                        <th class="border-top-0">Card Front</th>
-                                        <th class="border-top-0">Card Back</th>
-                                        <th class="border-top-0">Change</th>
-                                        <th class="border-top-0">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($data['data'] as $all)
-                                <tr>
-                                    <td>{{$all->orderID}}</td>
-                                    <td>{{$all->status}}</td>
-                                    <td>{{$all->packageID}}</td>
-                                    <td>{{$all->title}}</td>
-                                    <td>
-                                        <span class="m-b-0 font-16">{{$all->firstname." ".$all->lastname}}</span>
-                                    </td>
-                                    <td>{{$all->placed}}</td>
-                                    <td>
-                                        @if($all->glossy)
-                                            Glossy
-                                        @else
-                                            Normal
-                                        @endif
-                                    </td>
-                                    @if($all->orderUrl == null)
-                                        <td>No Images</td>
-                                        <td>No Images</td>
-                                    @else
-                                        <td>
-                                            <img src="{{url('storage/'.$all->orderUrl.'/front.jpg')}}" alt="" style="height: 40px;width: 60px;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);">
-                                        </td>
-                                        <td>
-                                            <img src="{{url('storage/'.$all->orderUrl.'/back.jpg')}}" alt="" style="height: 40px;width: 60px;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);">
-                                        </td>
-                                    @endif
-                                    <form action="/print_change_status" method="post">
-                                        @csrf
-                                        <input type="hidden" name="orderID" value="{{$all->orderID}}">
-                                        <input type="hidden" name="userID" value="{{$all->userID}}">
-                                        <td>
-                                            <div class="my-1">
-                                                <select class="form-control form-control-sm" name="change_status" id="inlineFormCustomSelect">
-                                                    <option selected>Choose...</option>
-                                                    @if($all->status == 'Print Vendor Assigned')
-                                                        <option value="Processing">Processing</option>
-                                                    @elseif($all->status == 'Processing')
-                                                        <option value="Print Done">Print Done</option>
-                                                    @elseif($all->status == 'Print Done' && auth()->user()->admin)
-                                                        <option value="Print Complete and Received">Print Complete and Received</option>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="display table table-hover" id="on_print_table" style="width:100%">
+                                        <thead>
+                                        <tr class="text-white font-weight-bold" style="background: linear-gradient(to right, #ec2F4B, #009FFF);">
+                                            <th class="border-top-0">Order ID</th>
+                                            <th class="border-top-0">Status</th>
+                                            <th class="border-top-0">Package ID</th>
+                                            <th class="border-top-0">Package Type</th>
+                                            <th class="border-top-0">Customer Name</th>
+                                            <th class="border-top-0">Order Date</th>
+                                            <th class="border-top-0">Card Type</th>
+                                            <th class="border-top-0">Card Front</th>
+                                            <th class="border-top-0">Card Back</th>
+                                            <th class="border-top-0">Change</th>
+                                            <th class="border-top-0">Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($data['data'] as $all)
+                                            <tr>
+                                                <td>{{$all->orderID}}</td>
+                                                <td>{{$all->status}}</td>
+                                                <td>{{$all->packageID}}</td>
+                                                <td>{{$all->title}}</td>
+                                                <td>
+                                                    <span class="m-b-0 font-16">{{$all->firstname." ".$all->lastname}}</span>
+                                                </td>
+                                                <td>{{$all->placed}}</td>
+                                                <td>
+                                                    @if($all->glossy)
+                                                        Glossy
+                                                    @else
+                                                        Normal
                                                     @endif
-                                                </select>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="my-1">
-                                                <button type="submit" class="btn btn-sm btn-warning">Change</button>
-                                            </div>
-                                        </td>
-                                    </form>
+                                                </td>
+                                                @if($all->orderUrl == null)
+                                                    <td>No Images</td>
+                                                    <td>No Images</td>
+                                                @else
+                                                    <td>
+                                                        <img src="{{url('storage/'.$all->orderUrl.'/front.jpg')}}" alt="" style="height: 40px;width: 60px;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);">
+                                                    </td>
+                                                    <td>
+                                                        <img src="{{url('storage/'.$all->orderUrl.'/back.jpg')}}" alt="" style="height: 40px;width: 60px;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);">
+                                                    </td>
+                                                @endif
+                                                <form action="/print_change_status" method="post">
+                                                    @csrf
+                                                    <input type="hidden" name="orderID" value="{{$all->orderID}}">
+                                                    <input type="hidden" name="userID" value="{{$all->userID}}">
+                                                    <td>
+                                                        <div class="my-1">
+                                                            <select class="form-control form-control-sm" name="change_status" id="inlineFormCustomSelect">
+                                                                <option selected>Choose...</option>
+                                                                @if($all->status == 'Print Vendor Assigned')
+                                                                    <option value="Processing">Processing</option>
+                                                                @elseif($all->status == 'Processing')
+                                                                    <option value="Print Done">Print Done</option>
+                                                                @elseif($all->status == 'Print Done' && auth()->user()->admin)
+                                                                    <option value="Print Complete and Received">Print Complete and Received</option>
+                                                                @endif
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="my-1">
+                                                            <button type="submit" class="btn btn-sm btn-warning">Change</button>
+                                                        </div>
+                                                    </td>
+                                                </form>
 
-                                </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     @endif
                 </div>

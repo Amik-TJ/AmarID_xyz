@@ -175,8 +175,8 @@ Route::post('/delete_faq', '\App\Http\Controllers\FAQController@delete_faq')->mi
 Route::post('/edit_faq', '\App\Http\Controllers\FAQController@edit_faq')->middleware('admin'); // Delete Blog
 
 
-
-
+// Manage User
+Route::get('/view_all_user', '\App\Http\Controllers\ManageAllUserController@index')->middleware('admin'); // Display All Users
 
 
 

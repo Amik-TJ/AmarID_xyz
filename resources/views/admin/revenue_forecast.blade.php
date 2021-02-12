@@ -42,57 +42,59 @@
                         <!-- title -->
 
                     @if($data['found'])
-                        <div class="table-responsive">
-                            <table class="table v-middle  table-hover" id="my_table">
-                                <thead>
-                                <tr class="bg-light">
-                                    <th class="border-top-0">Order ID</th>
-                                    <th class="border-top-0">Status</th>
-                                    <th class="border-top-0">Order Date</th>
-                                    <th class="border-top-0">User ID</th>
-                                    <th class="border-top-0">User Name</th>
-                                    <th class="border-top-0">Card Type</th>
-                                    <th class="border-top-0">Package ID</th>
-                                    <th class="border-top-0">Payment Method</th>
-                                    <th class="border-top-0">Tx ID</th>
-                                    <th class="border-top-0">Total Amount</th>
-                                    <th class="border-top-0">Cash Memo</th>
-                                    <th class="border-top-0">Remarks</th>
-                                </tr>
-                                </thead>
-                                <tbody>
+                       <div class="bg-white p-1 shadow" style="border-radius: 0.25rem">
+                           <div class="table-responsive">
+                               <table class="table v-middle  table-hover" id="my_table">
+                                   <thead>
+                                   <tr class="text-white font-weight-bold" style="background: linear-gradient(to right, #ec2F4B, #009FFF);">
+                                       <th class="border-top-0">Order ID</th>
+                                       <th class="border-top-0">Status</th>
+                                       <th class="border-top-0">Order Date</th>
+                                       <th class="border-top-0">User ID</th>
+                                       <th class="border-top-0">Customer Name</th>
+                                       <th class="border-top-0">Card Type</th>
+                                       <th class="border-top-0">Package ID</th>
+                                       <th class="border-top-0">Payment Method</th>
+                                       <th class="border-top-0">Tx ID</th>
+                                       <th class="border-top-0">Total Amount</th>
+                                       <th class="border-top-0">Cash Memo</th>
+                                       <th class="border-top-0">Remarks</th>
+                                   </tr>
+                                   </thead>
+                                   <tbody>
 
-                                @foreach($data['data'] as $all)
-                                <tr>
-                                    <td>{{$all->orderID}}</td>
-                                    <td>{{$all->status}}</td>
-                                    <td>{{(new DateTime($all->order_date))->format("Y-m-d")}}</td>
-                                    <td>{{$all->userID}}</td>
-                                    <td>{{$all->firstname}} {{$all->lastname}}</td>
-                                    <td>
-                                        @if($all->hardCopyIncluded)
-                                            Hard ID
-                                        @else
-                                            Soft ID
-                                        @endif
-                                    </td>
-                                    <td>{{$all->packageID}}</td>
-                                    <td>{{$all->payment_method}}</td>
-                                    <td>{{$all->txID}}</td>
-                                    <td>{{$all->total_price}}</td>
-                                    <td><button class="btn-warning btn-sm">Print</button></td>
-                                    <td>No Remarks</td>
-                                </tr>
-                                @endforeach
-                                </tbody>
-                                <tfoot class="mt-2 mb-4">
-                                    <tr>
-                                        <th colspan="9" class="font-weight-bold" style="text-align:right;">Total:</th>
-                                        <th class=""></th>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
+                                   @foreach($data['data'] as $all)
+                                       <tr>
+                                           <td>{{$all->orderID}}</td>
+                                           <td>{{$all->status}}</td>
+                                           <td>{{(new DateTime($all->order_date))->format("Y-m-d")}}</td>
+                                           <td>{{$all->userID}}</td>
+                                           <td>{{$all->firstname}} {{$all->lastname}}</td>
+                                           <td>
+                                               @if($all->hardCopyIncluded)
+                                                   Hard ID
+                                               @else
+                                                   Soft ID
+                                               @endif
+                                           </td>
+                                           <td>{{$all->packageID}}</td>
+                                           <td>{{$all->payment_method}}</td>
+                                           <td>{{$all->txID}}</td>
+                                           <td>{{$all->total_price}}</td>
+                                           <td><button class="btn-warning btn-sm">Print</button></td>
+                                           <td>No Remarks</td>
+                                       </tr>
+                                   @endforeach
+                                   </tbody>
+                                   <tfoot class="mt-2 mb-4">
+                                   <tr>
+                                       <th colspan="9" class="font-weight-bold" style="text-align:right;">Total:</th>
+                                       <th class=""></th>
+                                   </tr>
+                                   </tfoot>
+                               </table>
+                           </div>
+                       </div>
                     @endif
 
             </div>

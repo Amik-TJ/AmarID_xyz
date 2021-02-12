@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Assign_Vendor;
+use App\Models\Notifications;
 use App\Models\Orders;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -104,6 +105,26 @@ class AssignDeliveryVendorController extends Controller
         $order->status = 'On Delivery';
         $order->save();
 
+
+
+        // Sending Notification for Print Vendor
+        $delivery_vendor_device_id = User::where('userID',$delivery_vendor_id)->select('deviceID')->first();
+        $notification_message = 'You have received a new Delivery Job || Order ID : '.$order_id;
+        $notification = new Notifications();
+        $notification->userID = $delivery_vendor_id;
+        $notification->message = $notification_message;
+        $notification->type = 4.2;
+        $notification->time = now();
+        $notification->seen = 0;
+        $notification->save();
+
+
+        // Sending Push Notification
+        if($delivery_vendor_device_id != null)
+        {
+            $push = new PushNotificationController();
+            $push->push_notification_android($delivery_vendor_device_id,$notification_message, 4.2);
+        }
 
         return redirect('/assign_delivery_vendor')->with('success','Order no : '.$order_id.' assigned to --> '.$vendor_name);
 

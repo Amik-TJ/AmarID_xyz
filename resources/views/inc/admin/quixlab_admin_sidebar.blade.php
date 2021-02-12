@@ -67,6 +67,7 @@
                     <i class="icon-screen-tablet menu-icon"></i><span class="nav-text font-weight-bold">Manage Users</span>
                 </a>
                 <ul aria-expanded="false">
+                    <li><a href="/view_all_user">All Users</a></li>
                     <li><a href="/admin_vendor_registration">Register Vendor</a></li>
                     <li><a href="/admin_user_registration">Register User</a></li>
                     <li><a href="/view_unverified_user">Verify User</a></li>

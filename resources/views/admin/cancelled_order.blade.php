@@ -1,4 +1,7 @@
 @extends('layouts.admin_layout')
+@section('data_table_bootstrap')
+    <link href="/plugins/tables/css/datatable/dataTables.bootstrap4.min.css" rel="stylesheet">
+@endsection
 @section('content')
     <div class="container-fluid px-lg-4">
         <div class="row">
@@ -24,9 +27,9 @@
                     </div>
                     @if($data['found'])
                         <div class="table-responsive">
-                            <table class="table v-middle  table-hover" id="my_table">
+                            <table class="table table-striped zero-configuration">
                                 <thead>
-                                <tr class="bg-light">
+                                <tr class="text-white font-weight-bold" style="background: linear-gradient(to right, #ec2F4B, #009FFF);">
                                     <th class="border-top-0">#</th>
                                     <th class="border-top-0">Order ID</th>
                                     <th class="border-top-0">Package Type</th>
@@ -83,4 +86,8 @@
 
 @endsection
 
-
+@section('data_table')
+    <script src="/plugins/tables/js/jquery.dataTables.min.js"></script>
+    <script src="/plugins/tables/js/datatable/dataTables.bootstrap4.min.js"></script>
+    <script src="/plugins/tables/js/datatable-init/datatable-basic.min.js"></script>
+@endsection

@@ -33,6 +33,8 @@ class VerifyOrderController extends Controller
         );
 
 
+
+
         $keyword= "On Verification";
         $verify_orders = DB::table('orders')
             ->join('packages', 'orders.packageID', '=', 'packages.packageID')
@@ -40,6 +42,7 @@ class VerifyOrderController extends Controller
             ->where('orders.status', 'like', '%'.$keyword.'%')
             ->orderBy('orders.orderID', 'asc')
             ->get();
+
 
 
         if($verify_orders->isEmpty())

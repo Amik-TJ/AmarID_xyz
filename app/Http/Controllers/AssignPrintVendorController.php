@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Assign_Vendor;
+use App\Models\Notifications;
 use App\Models\Orders;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -104,6 +105,25 @@ class AssignPrintVendorController extends Controller
         $order->status = 'Print Vendor Assigned';
         $order->save();
 
+
+        // Sending Notification for Print Vendor
+        $print_vendor_device_id = User::where('userID',$print_vendor_id)->select('deviceID')->first();
+        $notification_message = 'You have received a new Print Job || Order ID : '.$order_id;
+        $notification = new Notifications();
+        $notification->userID = $print_vendor_id;
+        $notification->message = $notification_message;
+        $notification->type = 4.2;
+        $notification->time = now();
+        $notification->seen = 0;
+        $notification->save();
+
+
+        // Sending Push Notification
+        if($print_vendor_device_id != null)
+        {
+            $push = new PushNotificationController();
+            $push->push_notification_android($print_vendor_device_id,$notification_message, 4.2);
+        }
 
         return redirect('/assign_print_vendor')->with('success','Order no : '.$order_id.' assigned to --> '.$vendor_name);
 

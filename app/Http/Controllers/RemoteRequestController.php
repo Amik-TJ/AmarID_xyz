@@ -242,31 +242,44 @@ class RemoteRequestController extends Controller
 
 
 
-        $orders = new Orders();
-        $orders->userID = $userID;
-        $orders->packageID = $packageID;
-        $orders->glossy = $glossy;
-        $orders->spot = $spot;
-        $orders->rounded = $rounded;
-        $orders->total_price = $total_price;
-        $orders->json = $json_txt;
-        $orders->save();
-        $orderID =  $orders->orderID;
-
-        $upload_dir = 'uploads/orders/' . $orderID;
-
-
-        $ordr = Orders::find($orderID);
-        $ordr->orderUrl = $upload_dir;
-        $ordr->save();
-        /*if (!is_dir($upload_dir)) {
-            mkdir($upload_dir, 0777, true);
-        }
-        file_put_contents($upload_dir . '/front.jpg', $front);
-        file_put_contents($upload_dir . '/back.jpg', $back);*/
 
 
         try {
+            $orders = new Orders();
+            $orders->userID = $userID;
+            $orders->packageID = $packageID;
+            $orders->glossy = $glossy;
+            $orders->spot = $spot;
+            $orders->rounded = $rounded;
+            $orders->total_price = $total_price;
+            $orders->json = $json_txt;
+            $orders->save();
+            $orderID =  $orders->orderID;
+
+            $upload_dir = 'uploads/orders/' . $orderID;
+
+
+            $ordr = Orders::find($orderID);
+            $ordr->orderUrl = $upload_dir;
+            $ordr->save();
+
+        }
+        catch (Throwable $e) {
+            report($e);
+            echo 'Message: ' .$e->getMessage();;
+        }
+
+
+
+        //mkdir(storage_path().'/app/public/'.$upload_dir, 0777, true);
+        /*if (!file_exists(storage_path().'/app/public/'.$upload_dir)) {
+            mkdir(storage_path().'/app/public/'.$upload_dir, 0777, true);
+        }*/
+
+
+
+        try {
+            mkdir(storage_path().'/app/public/'.$upload_dir, 0777, true);
             Storage::disk('public')->put($upload_dir . '/front.jpg', $front,'public');
             Storage::disk('public')->put($upload_dir . '/back.jpg', $back,'public');
         }
@@ -279,12 +292,14 @@ class RemoteRequestController extends Controller
 //
         $tmp = 1;
         foreach ($images as &$img) {
-            $img_upload_dir = $upload_dir.'/img'.$tmp.'.jpg';
-            Storage::disk('public')->put($img_upload_dir, base64_decode($img),'public');
-            //file_put_contents($upload_dir . '/img' . $tmp . 'jpg', base64_decode($img));
-            $tmp = $tmp + 1;
-//                file_put_contents($upload_dir . '/img' . $tmp . 'jpg', base64_decode($img));
-            //              $tmp = $tmp + 1;
+            try {
+                $img_upload_dir = $upload_dir . '/img' . $tmp . '.jpg';
+                $path = Storage::disk('public')->put($img_upload_dir, base64_decode($img), 'public');
+                $tmp = $tmp + 1;
+            }catch (Throwable $e) {
+                report($e);
+                echo 'Message: ' .$e->getMessage();;
+            }
         }
 
 
@@ -317,7 +332,9 @@ class RemoteRequestController extends Controller
             $push->push_notification_android($device_id,$notification_message,4.1);
         }
 
-        return "{$orderID}";
+
+        /*return "{$orderID}";*/
+        return strval($orderID);
 
     }
 
