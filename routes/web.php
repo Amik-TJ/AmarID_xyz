@@ -81,12 +81,13 @@ Route::get('/cancelled_order', '\App\Http\Controllers\CancelledOrder@index')->mi
 
 // Print Vendor
 Route::get('/print_vendor_all_order', '\App\Http\Controllers\PrintVendorController@index')->middleware('print_vendor');
-
+Route::get('/print_vendor_dashboard','\App\Http\Controllers\AdminDashBoardController@print_vendor_dashboard')->middleware('print_vendor');
 
 
 
 // Delivery Vendor
 Route::get('/delivery_vendor_all_order', '\App\Http\Controllers\DeliveryVendorController@index')->middleware('delivery_vendor');
+Route::get('/delivery_vendor_dashboard','\App\Http\Controllers\AdminDashBoardController@delivery_vendor_dashboard')->middleware('delivery_vendor');
 
 
 
@@ -101,7 +102,7 @@ Route::get('/remote_delivery_charge', '\App\Http\Controllers\RemoteRequestContro
 
 
 // Packages
-Route::get('/package', '\App\Http\Controllers\PackageController@index')->middleware('admin');
+Route::get('/package', '\App\Http\Controllers\PackageController@index')->middleware('auth');
 Route::post('/delete_package', '\App\Http\Controllers\PackageController@delete_package')->middleware('admin');
 Route::post('/create_new_package', '\App\Http\Controllers\PackageController@create_package')->middleware('admin');
 Route::post('/edit_package', '\App\Http\Controllers\PackageController@edit_package')->middleware('admin');
@@ -116,6 +117,7 @@ Route::post('/delete_template', '\App\Http\Controllers\TemplateController@delete
 Route::get('/banner', '\App\Http\Controllers\BannerController@index')->middleware('admin'); // Display Banner
 Route::post('/create_new_banner', '\App\Http\Controllers\BannerController@create_banner')->middleware('admin'); // Create Banner
 Route::post('/delete_banner', '\App\Http\Controllers\BannerController@delete_banner')->middleware('admin'); // Delete Banner
+Route::post('/edit_banner', '\App\Http\Controllers\BannerController@edit_banner')->middleware('admin'); // Delete Banner
 
 
 // Blog

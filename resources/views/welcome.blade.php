@@ -364,7 +364,7 @@
     <div class="row mx-2 mb-5">
         <div class="owl-carousel owl-theme">
             @foreach($banner as $b)
-                @if($b->banner_row == 1)
+                @if($b->banner_row == 1 || $b->banner_row == 3)
                     <div class="item h-100">
                         <div class="item h-100" >
                             <h1><img class="img-fluid" src="{{url('storage/'.$b->imgURL)}}" alt="{{$b->banner_seo}}" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);"></h1>
@@ -389,7 +389,7 @@
     <div class="row mx-2 mb-5">
         <div class="owl-carousel owl-theme">
             @foreach($banner as $b)
-                @if($b->banner_row == 2)
+                @if($b->banner_row == 2 || $b->banner_row == 3)
                     <div class="item h-100">
                         <div class="item h-100">
                             <h1><img class="img-fluid" src="{{url('storage/'.$b->imgURL)}}" alt="{{$b->banner_seo}}" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);"></h1>
@@ -506,12 +506,16 @@
                                     </div>
                                 </ul>--}}
                                 <div class="media shadow p-3 mb-2 bg-white rounded">
-                                    <img class="mr-3 img-fluid mt-2" src="https://picsum.photos/200" alt="Something" style="width: 64px; height: 64px;">
+                                    <img class="mr-3 img-fluid mt-2" src="{{ $user->photo_url != null ? url('storage'.$user->photo_url):'images/avatar/dummy.png'}}" alt="Something" style="width: 64px; height: 64px;">
                                     <div class="media-body">
                                         <div class="col-sm-12">
                                             <div class="font-weight-bold text-info text-break">{{$user->firstname}} {{$user->lastname}} </div>
-                                            <i class="fa fa-envelope mr-2" aria-hidden="true"></i><span class="text-break" style="font-size: 15px;">{{$user->email}}</span><br>
+                                            @if($user->email)
+                                                <i class="fa fa-envelope mr-2" aria-hidden="true"></i><span class="text-break" style="font-size: 15px;">{{$user->email}}</span><br>
+                                            @endif
+                                            @if($user->phone)
                                             <i class="fa fa-mobile mr-2 ml-1" aria-hidden="true"></i><span style="font-size: 15px;">{{$user->phone}}</span><br>
+                                            @endif
                                             <i class="fas fa-briefcase mr-2 " aria-hidden="true"></i></i><span style="font-size: 15px;">{{$user->subFieldName}}</span>
                                         </div>
                                     </div>

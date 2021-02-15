@@ -32,7 +32,7 @@ class SearchController extends Controller
                             ->join('account_type as a','a.accTypeID','=','u.accTypeID')
                             ->join('field as f','f.fieldID','=','u.fieldID')
                             ->join('sub_field as s','s.subFieldID','=','u.subFieldID')
-                            ->select('u.firstname','u.lastname','u.email','u.phone','u.location','u.photo_url','u.photo_url','a.typeName','f.fieldName','s.subFieldName')
+                            ->select('u.firstname','u.lastname','u.email','u.phone','u.location','u.photo_url','a.typeName','f.fieldName','s.subFieldName')
                             ->where('a.accTypeID',$id)->get();
 
 

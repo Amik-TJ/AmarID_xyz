@@ -221,8 +221,6 @@ class RemoteRequestController extends Controller
 
         $images = json_decode($_POST['images']);
 
-
-
 */
 
 

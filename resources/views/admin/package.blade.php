@@ -1,4 +1,4 @@
-@extends('layouts.admin_layout')
+@extends(auth()->user()->admin ||auth()->user()->print_vendor ||auth()->user()->delivery_vendor ?'layouts.admin_layout': 'layouts.user_layout')
 @section('content')
 <div class="container-fluid px-lg-4">
     <div class="row">
@@ -6,9 +6,11 @@
             <!-- Page Heading -->
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 class="h3 mb-0 text-gray-800">Packages</h1>
+                @if(auth()->user()->admin)
                 <button type="button" class="d-none d-sm-inline-block btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#create_package_modal"><i class="fas fa-address-card"></i>
-                    Create a New Package</button>
-
+                    Create a New Package
+                </button>
+                @endif
             </div>
         </div>
         <div class="col-md-12">
@@ -18,8 +20,10 @@
                     <div class="card h-100">
                         <div class="card-body">
                             <h4 class="mb-3 text-success">{{$package->title}}</h4>
+                            @if(auth()->user()->admin)
                             <h6 class="mt-1 mb-1"><span class="font-weight-bold">Price: </span>{{$package->price}} TK</h6>
                             <h6 class="mt-1 mb-1"><span class="font-weight-bold">Discount: </span>{{$package->discount}} TK</h6>
+                            @endif
                             <div class="mb-1">
 
                                 <h6 class=""> <span class="text-primary">Hard Copy :</span>
@@ -46,7 +50,9 @@
                                 <h6><span class="text-primary">Rounded Option :</span>
                                     @if($package->roundedOption == 1)
                                         Yes
+                                        @if(auth()->user()->admin)
                                         <h6><span class="text-primary">Rounded Price : </span>{{$package->roundPrice}}</h6>
+                                        @endif
                                     @else
                                         No
                                     @endif
@@ -54,7 +60,9 @@
                                 <h6><span class="text-primary">Spot Option :</span>
                                     @if($package->spotOption == 1)
                                         Yes
+                                        @if(auth()->user()->admin)
                                         <h6><span class="text-primary">Spot Price : </span>{{$package->spotPrice}}</h6>
+                                        @endif
                                     @else
                                         No
                                     @endif
@@ -78,6 +86,7 @@
 
 
                         </div>
+                        @if(auth()->user()->admin)
                         <div class="card-footer">
                             <button type="button" class="btn btn-warning btn-sm float-left" data-toggle="modal" data-target="#edit_package_modal" data-package_id="{{$package->packageID}}" data-title="{{$package->title}}" data-description="{{$package->description}}" data-hard_copy_included="{{$package->hardCopyIncluded}}" data-one_sided_card="{{$package->oneSidedCard}}" data-rounded_option="{{$package->roundedOption}}"data-texture_option="{{$package->textureOption}}" data-spot_option="{{$package->spotOption}}" data-round_price="{{$package->roundPrice}}"data-spot_price="{{$package->spotPrice}}" data-weight="{{$package->weight}}" data-price="{{$package->price}}" data-no_of_soft_id="{{$package->noOfSoftID}}" data-discount="{{$package->discount}}">Edit</button>
                             <form action="/delete_package" method="Post">
@@ -86,6 +95,7 @@
                                 <button class="btn btn-danger float-right btn-sm">Archive</button>
                             </form>
                         </div>
+                        @endif
                     </div>
                 </div>
                 @endforeach

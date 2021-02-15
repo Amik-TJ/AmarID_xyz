@@ -26,34 +26,9 @@
                 </a>
             </li>
             <li>
-                <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                    <i class="icon-screen-tablet menu-icon"></i><span class="nav-text font-weight-bold">Card Utilities</span>
+                <a href="/package">
+                    <i class="icon-screen-tablet menu-icon"></i><span class="nav-text font-weight-bold">Packages</span>
                 </a>
-                <ul aria-expanded="false">
-                    <li><a href="/package">Packages</a></li>
-                    <li><a href="/template">Templates</a></li>
-                    <li><a href="/banner">Banners</a></li>
-                    <li><a href="/weight">Card Weights</a></li>
-                </ul>
-            </li>
-            <li>
-                <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                    <i class="icon-screen-tablet menu-icon"></i><span class="nav-text font-weight-bold">Blogs & FAQs</span>
-                </a>
-                <ul aria-expanded="false">
-                    <li><a href="/blog">Blogs</a></li>
-                    <li><a href="/web_app_blog">Web App Blogs</a></li>
-                    <li><a href="/faq">FAQs</a></li>
-                </ul>
-            </li>
-            <li>
-                <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                    <i class="icon-grid menu-icon"></i><span class="nav-text font-weight-bold">Feedback and Reports</span>
-                </a>
-                <ul aria-expanded="false">
-                    <li><a href="/feedback">Feedbacks</a></li>
-                    <li><a href="/report">Reports</a></li>
-                </ul>
             </li>
             <li>
                 <a class="" href="{{ route('logout') }}"

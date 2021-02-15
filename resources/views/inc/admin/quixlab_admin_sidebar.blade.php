@@ -17,6 +17,18 @@
                     <i class="icon-speedometer menu-icon"></i><span class="nav-text font-weight-bold">Dashboard</span>
                 </a>
             </li>
+            @elseif($print)
+            <li>
+                <a href="/print_vendor_dashboard" >
+                    <i class="icon-speedometer menu-icon"></i><span class="nav-text font-weight-bold">Dashboard</span>
+                </a>
+            </li>
+            @elseif($delivery)
+            <li>
+                <a href="/delivery_vendor_dashboard" >
+                    <i class="icon-speedometer menu-icon"></i><span class="nav-text font-weight-bold">Dashboard</span>
+                </a>
+            </li>
             @endif
             <li>
                 <a href="/show_more_notification" >
@@ -61,10 +73,18 @@
                     @endif
                 </ul>
             </li>
+
+            @if($print)
+                    <li>
+                        <a href="/package">
+                            <i class="icon-screen-tablet menu-icon"></i><span class="nav-text font-weight-bold">Packages</span>
+                        </a>
+                    </li>
+            @endif
             @if($admin)
             <li>
                 <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                    <i class="icon-screen-tablet menu-icon"></i><span class="nav-text font-weight-bold">Manage Users</span>
+                    <i class="icon-user menu-icon"></i><span class="nav-text font-weight-bold">Manage Users</span>
                 </a>
                 <ul aria-expanded="false">
                     <li><a href="/view_all_user">All Users</a></li>

@@ -38,7 +38,7 @@ class VerifyOrderController extends Controller
         $keyword= "On Verification";
         $verify_orders = DB::table('orders')
             ->join('packages', 'orders.packageID', '=', 'packages.packageID')
-            ->join('payments', 'orders.orderID', '=', 'payments.orderID')
+            ->join('payments', 'payments.orderID', '=', 'orders.orderID')
             ->where('orders.status', 'like', '%'.$keyword.'%')
             ->orderBy('orders.orderID', 'asc')
             ->get();

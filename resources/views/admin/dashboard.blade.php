@@ -5,23 +5,35 @@
         $active_users = $data['active_users'];
         $total_order = $data['total_order'];
         $to_pay = $data['to_pay'];
-        $to_pay_p = (int)(($to_pay/$total_order)*100);
         $on_verification = $data['on_verification'];
-        $on_verification_p = (int)(($on_verification/$total_order)*100);
         $verification_done = $data['verification_done'];
         $print_vendor_assigned = $data['print_vendor_assigned'];
         $processing  = $data['Processing'];
-        $processing_p = (int)(($processing/$total_order)*100);
         $print_done = $data['print_done'];
-        $print_done_p = (int)(($print_done/$total_order)*100);
         $print_complete_and_received = $data['print_complete_and_received'];
         $assign_delivery_vendor = $data['assign_delivery_vendor'];
         $on_delivery = $data['on_delivery'];
-        $on_delivery_p = (int)(($on_delivery/$total_order)*100);
         $delivered = $data['delivered'];
-        $delivered_p = (int)(($delivered/$total_order)*100);
         $revenue_delivered = $data['revenue_delivered'];
         $revenue_all = $data['revenue_all'];
+
+        if($total_order > 0)
+            {
+                $to_pay_p = (int)(($to_pay/$total_order)*100);
+                $on_verification_p = (int)(($on_verification/$total_order)*100);
+                $processing_p = (int)(($processing/$total_order)*100);
+                $print_done_p = (int)(($print_done/$total_order)*100);
+                $on_delivery_p = (int)(($on_delivery/$total_order)*100);
+                $delivered_p = (int)(($delivered/$total_order)*100);
+            }
+        else{
+                $to_pay_p = 0;
+                $on_verification_p = 0;
+                $processing_p = 0;
+                $print_done_p = 0;
+                $on_delivery_p = 0;
+                $delivered_p = 0;
+        }
     @endphp
     <div class="container-fluid px-lg-4">
 
@@ -222,6 +234,8 @@
                                     </tr>
                                     </thead>
                                     <tbody>
+
+
                                     @foreach($data['latest_orders'] as $all)
                                     <tr>
                                         <td>

@@ -98,7 +98,7 @@ class BannerController extends Controller
                 $url = 'uploads/banners/';
 
                 if (!file_exists(storage_path().'/app/public/uploads/banners/')) {
-                    mkdir(storage_path().'/app/public/uploads/banners/', 666, true);
+                    mkdir(storage_path().'/app/public/uploads/banners/', 777, true);
                 }
 
                 $image = $request->file('banner_image');
@@ -137,5 +137,65 @@ class BannerController extends Controller
             }
         }
         abort(500, 'Could not upload image :(');
+    }
+
+
+
+    public function edit_banner(Request $request)
+    {
+        $banner_title = $request->input('banner_title_e');
+        $banner_row = $request->input('banner_row_e');  // 1 for Home || 2 for Office
+        $banner_seo = $request->input('banner_seo_e');  // 1 for Home || 2 for Office
+        $banner_id = $request->input('banner_id');
+
+        $banner = Banner::find($banner_id);
+
+
+        // image Storing Tasks
+        if ($request->hasFile('banner_image')) {
+
+            if ($request->file('banner_image')->isValid()) {
+
+
+                $validated = $request->validate([
+                    'banner_image' => 'mimes:jpeg,png,jpg|max:5120',
+                ]);
+                $extension = $request->banner_image->extension();
+                $banner_image = 'banner '.$banner_id.'.'.$extension;
+
+
+                $url = 'uploads/banners/';
+                $response = unlink(storage_path('app/public/'.$banner->imgURL));
+
+
+                if (!file_exists(storage_path().'/app/public/uploads/banners/')) {
+                    mkdir(storage_path().'/app/public/uploads/banners/', 777, true);
+                }
+
+                $image = $request->file('banner_image');
+                $storing_location = storage_path().'/app/public/uploads/banners/'.$banner_image;
+                $image_resize = Image::make($image->getRealPath());
+                $a = $image_resize->resize(960, 613);
+                $image_resize->save($storing_location);
+
+
+                // Db Storing URL
+                $url1 = $url.$banner_image;
+            }else{
+                return redirect('/banner')->with('error','Banner No : '.$banner_id.'cannot be edited Successfully');
+            }
+        }else{
+            $url1 = false;
+        }
+
+        $banner = Banner::find($banner_id);
+        $banner->banner_title = $banner_title;
+        $banner->banner_seo = $banner_seo;
+        $banner->banner_row = $banner_row;
+        $banner->imgURL = $url1 == null ? $banner->imgURL : $url1;
+        $banner->save();
+
+
+        return redirect('/banner')->with('success','Banner No : '.$banner_id.' edited Successfully');
     }
 }

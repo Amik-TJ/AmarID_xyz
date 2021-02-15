@@ -45,12 +45,12 @@ class LoginController extends Controller
         }
 
         if (auth()->user()->admin == 0  && auth()->user()->print_vendor == 1) {
-            $this->redirectTo = '/on_print';
+            $this->redirectTo = '/print_vendor_dashboard';
             return $this->redirectTo;
         }
 
         if (auth()->user()->admin == 0  && auth()->user()->delivery_vendor == 1) {
-            $this->redirectTo = '/shipped_order';
+            $this->redirectTo = '/delivery_vendor_dashboard';
             return $this->redirectTo;
         }
         $this->redirectTo = '/user_dashboard';
